@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Add SSH Key
-        run:
+        run: |
           - echo ${{ secrets.SSH_SECRET_KEY }} > private.key
           - ssh-add private.key
       - name: Connect SSH to Server
