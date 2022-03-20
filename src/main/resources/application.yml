@@ -7,3 +7,5 @@ spring:
   session:
     jdbc:
       initialize-schema: always
+  jpa:
+    defer-datasource-initialization: on
