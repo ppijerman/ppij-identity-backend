@@ -6,12 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WebController {
     @GetMapping("/")
-    String home() {
-        return "index";
-    }
-
-    @GetMapping("/privacy-policy")
-    String privacyPolicy() {
+    public String home() {
         return "index";
     }
 
@@ -34,4 +29,11 @@ public class WebController {
     String secret() {
         return "index";
     }
+  
+    @GetMapping("/privacy-policy")
+    public String privacyPolicy() { return "privacyPolicy"; }
+
+    @GetMapping("/register")
+    public String register() { return "register"; }
+
 }
