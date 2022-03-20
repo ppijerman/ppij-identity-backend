@@ -10,15 +10,30 @@ public class WebController {
         return "index";
     }
 
-    @GetMapping("/login")
-    public String login() { return "login"; }
+    @GetMapping("/about")
+    String about() {
+        return "index";
+    }
 
     @GetMapping("/logout")
-    public String logout() { return "logout"; }
+    String logout() {
+        return "logout";
+    }
 
+    @GetMapping("/login")
+    String login() {
+        return "login";
+    }
+
+    @GetMapping("/secret")
+    String secret() {
+        return "index";
+    }
+  
     @GetMapping("/privacy-policy")
     public String privacyPolicy() { return "privacyPolicy"; }
 
     @GetMapping("/register")
     public String register() { return "register"; }
+
 }
