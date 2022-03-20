@@ -16,7 +16,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers(
                         "/",
                         "/privacy-policy",
-                        "/about"
+                        "/about",
+                        "/register"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll()

@@ -31,7 +31,7 @@ public class WebController {
     }
   
     @GetMapping("/privacy-policy")
-    public String privacyPolicy() { return "privacyPolicy"; }
+    public String privacyPolicy() { return "privacy-policy"; }
 
     @GetMapping("/register")
     public String register() { return "register"; }
