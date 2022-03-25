@@ -21,12 +21,15 @@ public class Education {
     private Calendar end_date;
 
     @ManyToOne
+    @JoinColumn(name = "institution_id")
     private Institute institute_id;
 
     @ManyToOne
+    @JoinColumn(name = "person_id")
     private Person person_id;
 
     @OneToOne
+    @JoinColumn(name = "degree_id")
     private Degree degree_id;
 
 

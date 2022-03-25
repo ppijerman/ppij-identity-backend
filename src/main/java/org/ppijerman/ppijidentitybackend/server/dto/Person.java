@@ -45,10 +45,8 @@ public class Person {
     @Temporal(TemporalType.DATE)
     private Calendar last_verified;
 
-
     @Column(length = 10, nullable=false)
     private String zipcode;
-
 
     @Column(length = 50, nullable=false)
     private String street;
@@ -56,13 +54,17 @@ public class Person {
     @Column(columnDefinition="CHAR(4)", nullable=false)
     private String street_number;
 
+
+
     @ManyToOne
+    @JoinColumn(name = "branch_id")
     private Branch branch_id;
 
     @ManyToOne
+    @JoinColumn(name = "city_id")
     private City city_id;
 
-    @OneToMany
+    @OneToMany(mappedBy = "education_id")
     private List<Education> education_ids = new ArrayList<>();
 
 }
