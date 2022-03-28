@@ -1,0 +1,21 @@
+name: Production Pipeline
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup JDK 11
+        uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11
+          cache: maven
+      - name: Test with Maven
+        run: mvn -B test --file pom.xml
