@@ -6,15 +6,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Data
 @Table(name="CITY", schema="CENSUS")
 public class City {
-    //    TODO: Generated Value or use setter?
     @Id
-    private int city_id;
+    @Column(name="city_id", columnDefinition = "uuid")
+    private UUID cityID;
 
-    @Column(length = 50, nullable=false)
-    private String city_name;
+    @Column(name="city_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
+    private String cityName;
 }

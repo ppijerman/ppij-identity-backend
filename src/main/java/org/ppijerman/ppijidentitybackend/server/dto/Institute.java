@@ -4,30 +4,31 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.UUID;
 
 @Entity
 @Data
 @Table(name="INSTITUTE", schema="CENSUS")
 public class Institute {
-    //    TODO: Generated Value or use setter?
     @Id
-    private int institute_id;
+    @Column(name="institute_id", columnDefinition = "uuid")
+    private UUID instituteID;
 
-    @Column(length = 50, nullable=false)
+    @Column(name="institute_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String institute_name;
 
-    @Column(length = 20)
+    @Column(name="phone", columnDefinition="VARCHAR(50)", length = 20)
     private String phone;
 
-    @Column(length = 50)
+    @Column(name="email", columnDefinition="VARCHAR(50)", length = 50)
     private String email;
 
-    @Column(length = 10)
+    @Column(name="zipcode", columnDefinition="VARCHAR(10)", length = 10)
     private String zipcode;
 
-    @Column(length = 50)
+    @Column(name="street", columnDefinition="VARCHAR(50)", length = 50)
     private String street;
 
-    @Column(columnDefinition="CHAR(5)")
+    @Column(name="street_number", columnDefinition="VARCHAR(5)", length = 5)
     private String street_number;
 }

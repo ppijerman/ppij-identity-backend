@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -13,8 +14,9 @@ import javax.persistence.Table;
 public class Degree {
     // TODO: Generated Value or use setter?
     @Id
-    private int degree_id;
+    @Column(name="degree_id", columnDefinition = "uuid")
+    private UUID degree_id;
 
-    @Column(length = 50, nullable=false)
+    @Column(name="degree", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String degree;
 }
