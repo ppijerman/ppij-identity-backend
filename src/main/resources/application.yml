@@ -11,10 +11,10 @@ spring:
     defer-datasource-initialization: on
   mail:
     default-encoding: UTF-8
-    host:
-    username:
-    password:
-    port: 587
+    host: smtp.mailtrap.io
+    username: 50e3a266646fe1
+    password: f24fd78edff307
+    port: 2525
     properties:
       mail:
         smtp:
