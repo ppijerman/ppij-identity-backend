@@ -4,37 +4,38 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.UUID;
 
 @Entity
 @Data
 @Table(name="BRANCH", schema="CENSUS")
 public class Branch {
-    // TODO: Generated Value or use setter?
     @Id
-    private int branch_iD;
+    @Column(name="branch_id", columnDefinition = "uuid")
+    private UUID branchID;
 
-    @Column(length = 50, nullable=false)
-    private String branch_name;
+    @Column(name="branch_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
+    private String branchName;
 
-    @Column(length = 50, nullable=false)
+    @Column(name="email", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String email;
 
-    @Column(length = 50, nullable=false)
+    @Column(name="leader", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String leader;
 
-    @Column(length = 50, nullable=false)
+    @Column(name="phone", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String phone;
 
-    @Column(length = 50)
+    @Column(name="website", columnDefinition="VARCHAR(50)", length = 50)
     private String website;
 
-    @Column(length = 50)
+    @Column(name="facebook", columnDefinition="VARCHAR(50)", length = 50)
     private String facebook;
 
-    @Column(length = 50)
+    @Column(name="instagram", columnDefinition="VARCHAR(50)", length = 50)
     private String instagram;
 
-    @Column(length = 50)
+    @Column(name="twitter", columnDefinition="VARCHAR(50)", length = 50)
     private String twitter;
 
 }

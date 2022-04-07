@@ -4,33 +4,44 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Data
 @Table(name="EDUCATION", schema="CENSUS")
 public class Education {
-    //    TODO: Generated Value or use setter?
     @Id
-    private int education_id;
+    @Column(name="education_id", columnDefinition = "uuid")
+    private UUID education_id;
 
-    @Column(nullable=false)
+    @Column(name="start_date", nullable=false)
     @Temporal(TemporalType.DATE)
-    private Calendar start_date;
+    private Calendar startDate;
 
+    @Column(name="end_date")
     @Temporal(TemporalType.DATE)
-    private Calendar end_date;
+    private Calendar endDate;
+
 
     @ManyToOne
-    @JoinColumn(name = "institution_id")
-    private Institute institute_id;
+    @JoinColumn(name = "institute_id")
+    private Institute instituteID;
 
     @ManyToOne
     @JoinColumn(name = "person_id")
-    private Person person_id;
+    private Person personID;
 
     @OneToOne
     @JoinColumn(name = "degree_id")
-    private Degree degree_id;
+    private Degree degreeID;
 
+    @OneToMany
+    @JoinColumn(name = "major_id")
+    private List<Major> major;
+
+    @OneToOne
+    @JoinColumn(name = "funding_id")
+    private Funding funding;
 
 }
