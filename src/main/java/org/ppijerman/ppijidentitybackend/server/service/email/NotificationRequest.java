@@ -19,12 +19,13 @@ public class NotificationRequest {
         this.email = email;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
 
-    public String getContent() {
-        return content;
-    }
 
 }

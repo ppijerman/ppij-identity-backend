@@ -1,0 +1,7 @@
+spring:
+  mail:
+    host: 127.0.0.1
+    username: adib
+    password: springboot
+    port: 3025
+    protocol: smtp

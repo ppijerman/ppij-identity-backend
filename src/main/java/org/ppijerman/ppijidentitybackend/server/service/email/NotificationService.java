@@ -2,7 +2,9 @@ package org.ppijerman.ppijidentitybackend.server.service.email;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
+@Service
 public class NotificationService {
 
     // Simple class which does the mail handling
