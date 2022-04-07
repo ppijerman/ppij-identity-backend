@@ -14,18 +14,18 @@ public class IpTrialLoggerService {
         this.ipRepository = ipRepository;
     }
 
-    public void addFailTrialToIp(String ip) {
-        IpTrialLog ipTrialLog = ipRepository.findById(ip).orElse(new IpTrialLog(ip, 1));
-        ipRepository.save(ipTrialLog);
+    public void addTrialToIp(String ip) {
+        IpTrialLog ipTrialLog = this.ipRepository.findById(ip).orElse(new IpTrialLog(ip, 1));
+        this.ipRepository.save(ipTrialLog);
     }
 
     public int getTrialErrorCountForIp(String ip) {
-        return ipRepository.findById(ip).orElse(new IpTrialLog( ip, 0)).getTrialCount();
+        return this.ipRepository.findById(ip).orElse(new IpTrialLog( ip, 0)).getTrialCount();
     }
 
     public boolean resetTrialForIp(String ip) {
-        boolean isExists = ipRepository.findById(ip).isPresent();
-        ipRepository.deleteById(ip);
+        boolean isExists = this.ipRepository.findById(ip).isPresent();
+        this.ipRepository.deleteById(ip);
         return isExists;
     }
 }
