@@ -20,7 +20,8 @@ public class AccessToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp expirationTime;
 
-    @OneToMany(mappedBy = "application_id")
+    @OneToMany
+    @JoinColumn(name = "application_id")
     private List<Application> applications;
 
 }

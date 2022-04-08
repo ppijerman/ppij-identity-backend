@@ -16,6 +16,7 @@ public class Funding {
     @Column(name="funding_type", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String fundingType;
 
-    @OneToOne(mappedBy = "institute")
+    @OneToOne
+    @JoinColumn(name = "institute")
     private Institute institute;
 }

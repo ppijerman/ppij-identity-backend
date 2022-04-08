@@ -28,7 +28,8 @@ public class Application {
     @Temporal(TemporalType.DATE)
     private Calendar creationDate;
 
-    @OneToMany(mappedBy = "application_owner_id")
+    @OneToMany
+    @JoinColumn(name = "application_owner_id")
     private List<Person> ownerList;
 
 }
