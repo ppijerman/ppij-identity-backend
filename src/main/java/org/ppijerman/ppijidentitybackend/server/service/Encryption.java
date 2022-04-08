@@ -1,6 +1,8 @@
 package org.ppijerman.ppijidentitybackend.server.service;
 
 import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service("enc")
