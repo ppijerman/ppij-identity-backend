@@ -16,6 +16,18 @@ public class NotificationService {
         this.javaMailSender = javaMailSender;
     }
 
+    public void notifyUser(String email, String content) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setFrom("admin@spring.io");        // static address
+        mail.setSubject("Email Confirmation");  // static subject
+        mail.setText(content);
+        mail.setTo(email);
+
+        this.javaMailSender.send(mail);
+    }
+
+    // TODO: Add methods to create confirmation token and mail builder to send email confirmation
+
     /*
     public void sendMessage(NotificationRequest mail) {
         SimpleMailMessage message = new SimpleMailMessage();
@@ -28,15 +40,5 @@ public class NotificationService {
     }
 
      */
-
-    public void notifyUser(String email, String content) {
-        SimpleMailMessage mail = new SimpleMailMessage();
-        mail.setFrom("admin@spring.io");        // static address
-        mail.setSubject("Email Confirmation");  // static subject
-        mail.setText(content);
-        mail.setTo(email);
-
-        this.javaMailSender.send(mail);
-    }
 
 }

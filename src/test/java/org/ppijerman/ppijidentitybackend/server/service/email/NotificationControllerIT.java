@@ -42,7 +42,7 @@ class NotificationControllerIT {
 
         ResponseEntity<Void> response = this.testRestTemplate.postForEntity("/notifications", request, Void.class);
 
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(302, response.getStatusCodeValue());
 
 
     }
