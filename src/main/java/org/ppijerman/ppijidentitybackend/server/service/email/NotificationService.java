@@ -1,5 +1,6 @@
 package org.ppijerman.ppijidentitybackend.server.service.email;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -8,11 +9,25 @@ import org.springframework.stereotype.Service;
 public class NotificationService {
 
     // Simple class which does the mail handling
-    private final JavaMailSender javaMailSender;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     public NotificationService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
+
+    /*
+    public void sendMessage(NotificationRequest mail) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setSubject(mail.getSubject());
+        message.setText(mail.getContent());
+        message.setTo(mail.getTo());
+        message.setFrom(mail.getFrom());
+
+        javaMailSender.send(message);
+    }
+
+     */
 
     public void notifyUser(String email, String content) {
         SimpleMailMessage mail = new SimpleMailMessage();
@@ -23,4 +38,5 @@ public class NotificationService {
 
         this.javaMailSender.send(mail);
     }
+
 }

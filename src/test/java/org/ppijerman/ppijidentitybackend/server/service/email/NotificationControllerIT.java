@@ -14,9 +14,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-
-import javax.mail.internet.MimeMessage;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -35,7 +32,7 @@ class NotificationControllerIT {
     private TestRestTemplate testRestTemplate;
 
     @Test
-    void shouldNotifyUserViaEmail() {
+    void shouldNotifyUserViaEmail() throws Exception {
 
         String payload = "{ \"email\": \"adib@spring.io\", \"content\": \"This is email confirmation!\" }";
 
@@ -46,6 +43,7 @@ class NotificationControllerIT {
         ResponseEntity<Void> response = this.testRestTemplate.postForEntity("/notifications", request, Void.class);
 
         assertEquals(200, response.getStatusCodeValue());
+
 
     }
 }
