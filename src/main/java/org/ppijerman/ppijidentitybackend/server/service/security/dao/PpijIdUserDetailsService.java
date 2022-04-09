@@ -1,6 +1,5 @@
 package org.ppijerman.ppijidentitybackend.server.service.security.dao;
 
-import org.ppijerman.ppijidentitybackend.server.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +14,13 @@ public class PpijIdUserDetailsService implements UserDetailsService, UserDetails
 
     private final Logger log = LoggerFactory.getLogger(PpijIdUserDetailsService.class);
 
-    private final UserRepository userRepository;
+    // private final UserRepository userRepository;
 
     @Autowired
     public PpijIdUserDetailsService(
-            UserRepository userRepository
+            // UserRepository userRepository
     ) {
-        this.userRepository = userRepository;
+        // this.userRepository = userRepository;
     }
 
 
