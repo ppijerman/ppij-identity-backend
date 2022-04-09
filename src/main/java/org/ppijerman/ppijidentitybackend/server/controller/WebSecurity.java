@@ -42,6 +42,11 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .successHandler(this.ppijIdAuthenticationSuccessHandler)
                     .failureHandler(this.ppijIdAuthenticationFailureHandler)
-                .and().logout().logoutUrl("/logout").invalidateHttpSession(true).clearAuthentication(true).permitAll();
+                .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .permitAll();
     }
 }

@@ -28,7 +28,7 @@ public class PpijIdUserDetailsService implements UserDetailsService, UserDetails
     // TODO after repository done
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        log.trace("Loading user with email <{}> within user details service.", email);
+        log.trace("Loading user with email {} within user details service.", email);
         return null;
     }
 
