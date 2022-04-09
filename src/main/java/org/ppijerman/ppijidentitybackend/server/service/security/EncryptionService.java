@@ -9,6 +9,10 @@ import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.keygen.KeyGenerators;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Calendar;
@@ -39,6 +43,19 @@ public class EncryptionService {
 
     public boolean checkHash(String plainText, String hashed) {
         return BCrypt.checkpw(plainText, hashed);
+    }
+
+    public byte[] encrypt(Serializable serializable) {
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream)) {
+            objectOutputStream.writeObject(serializable);
+            objectOutputStream.flush();
+            byte[] readBytes = byteArrayOutputStream.toByteArray();
+            return this.encryptBytes(readBytes);
+        } catch (IOException e) {
+            log.error("IOException happen when encrypting serializable object with message: {}", e.getMessage());
+            return null;
+        }
     }
 
     public byte[] encryptBytes(byte[] plainBytes) {
