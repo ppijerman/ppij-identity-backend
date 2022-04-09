@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface IpRepository extends JpaRepository<IpTrialLog, String> {
-    public List<IpTrialLog> findAllByIpStartsWith(String prefix);
 }
