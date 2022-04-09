@@ -1,7 +1,7 @@
 package org.ppijerman.ppijidentitybackend.server.controller;
 
-import org.ppijerman.ppijidentitybackend.server.service.security.dao.PpijIdAuthenticationFailureHandler;
-import org.ppijerman.ppijidentitybackend.server.service.security.dao.PpijIdAuthenticationSuccessHandler;
+import org.ppijerman.ppijidentitybackend.server.service.security.dao.authentication.PpijIdAuthenticationFailureHandler;
+import org.ppijerman.ppijidentitybackend.server.service.security.dao.authentication.PpijIdAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

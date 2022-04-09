@@ -1,4 +1,4 @@
-package org.ppijerman.ppijidentitybackend.server.service.security.dao;
+package org.ppijerman.ppijidentitybackend.server.service.security.dao.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

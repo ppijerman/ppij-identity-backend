@@ -1,4 +1,4 @@
-package org.ppijerman.ppijidentitybackend.server.service.security.dao;
+package org.ppijerman.ppijidentitybackend.server.service.security.dao.authentication;
 
 import com.google.common.net.InetAddresses;
 import org.ppijerman.ppijidentitybackend.server.dto.IpTrialLog;
