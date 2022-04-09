@@ -1,13 +1,17 @@
-package org.ppijerman.ppijidentitybackend.server.service;
+package org.ppijerman.ppijidentitybackend.server.service.security;
 
 import com.google.common.net.InetAddresses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.time.Duration;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -15,31 +19,59 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-@Service
-public class LoginRateLimiterService {
-    @Value("${ppij-id.security.lockoff.limit}")
-    private int TRIAL_LIMIT_FOR_EACH_IP;
+public class PpijAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
-    @Value("${ppij-id.security.lockoff.cooldown:30}")
-    private long COOLWDOWN;
+    private final int TRIAL_LIMIT_FOR_EACH_IP;
 
-    private final Logger log = LoggerFactory.getLogger(LoginRateLimiterService.class);
+    private final long COOLWDOWN;
+
+    private final Logger log = LoggerFactory.getLogger(PpijAuthenticationFilter.class);
+
     private final Map<String, ScheduledFuture<?>> timerMap;
     private final ScheduledExecutorService executorService;
 
     IpTrialLoggerService ipTrialLoggerService;
 
     @Autowired
-    public LoginRateLimiterService(IpTrialLoggerService ipTrialLoggerService) {
+    public PpijAuthenticationFilter(
+            IpTrialLoggerService ipTrialLoggerService,
+            @Value("${ppij-id.security.lockoff.limit}") int trialLimit,
+            @Value("${ppij-id.security.lockoff.cooldown:300}") long cooldown
+    ) {
         this.ipTrialLoggerService = ipTrialLoggerService;
         this.timerMap = new HashMap<>();
         this.executorService = Executors.newScheduledThreadPool(1);
+        this.TRIAL_LIMIT_FOR_EACH_IP = trialLimit;
+        this.COOLWDOWN = cooldown;
+    }
+
+    @Override
+    @Autowired
+    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+        super.setAuthenticationManager(authenticationManager);
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+        final String ip = request.getRemoteAddr();
+        final String username = obtainUsername(request);
+        log.debug("Got authentication attempt from ip {}.", ip);
+
+        if (!checkAndLogIp(ip)) {
+            throw new IpRateLimitedException("Ip is rate limited due to many failed trials.");
+        }
+
+        return super.attemptAuthentication(request, response);
     }
 
     public boolean checkAndLogIp(String ip) {
         if (!InetAddresses.isInetAddress(ip)) {
             log.warn("Checked string ({}) is not a valid Ip address", ip);
             return false;
+        }
+        if (!timerMap.containsKey(ip)) {
+            log.debug("Ip address {} is not on cooldown yet, adding the cooldown.", ip);
+            this.addCooldown(ip);
         }
 
         final int trials = ipTrialLoggerService.getTrialErrorCountForIp(ip);
@@ -50,10 +82,6 @@ public class LoginRateLimiterService {
             return true;
         } else {
             log.debug("Checked ip address {} and it exceeds limited amount of trial ({}/{}).", ip, trials, TRIAL_LIMIT_FOR_EACH_IP);
-            if (!timerMap.containsKey(ip)) {
-                log.debug("Ip address {} is not on cooldown yet, adding the cooldown.", ip);
-                this.addCooldown(ip);
-            }
             return false;
         }
     }

@@ -1,4 +1,4 @@
-package org.ppijerman.ppijidentitybackend.server.service;
+package org.ppijerman.ppijidentitybackend.server.service.security;
 
 import org.ppijerman.ppijidentitybackend.server.dto.IpTrialLog;
 import org.ppijerman.ppijidentitybackend.server.repository.IpRepository;

@@ -9,3 +9,9 @@ spring:
       initialize-schema: always
   jpa:
     defer-datasource-initialization: on
+
+ppij-id:
+  security:
+    lockoff:
+      limit: 5
+      cooldown: 300
