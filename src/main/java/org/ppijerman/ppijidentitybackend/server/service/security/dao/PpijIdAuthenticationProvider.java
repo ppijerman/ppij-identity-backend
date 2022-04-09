@@ -21,8 +21,4 @@ public class PpijIdAuthenticationProvider extends DaoAuthenticationProvider {
         this.setUserDetailsService(ppijIdUserDetailsService);
         this.setUserDetailsPasswordService(ppijIdUserDetailsService);
     }
-
-    public boolean isAccountActive(String username) {
-        return true;
-    }
 }

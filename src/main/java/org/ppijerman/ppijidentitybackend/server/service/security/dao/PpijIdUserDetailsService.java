@@ -23,7 +23,6 @@ public class PpijIdUserDetailsService implements UserDetailsService, UserDetails
         // this.userRepository = userRepository;
     }
 
-
     // TODO after repository done
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
