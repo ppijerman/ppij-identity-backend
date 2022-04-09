@@ -1,4 +1,4 @@
-package org.ppijerman.ppijidentitybackend.server.service.security;
+package org.ppijerman.ppijidentitybackend.server.service.security.dao;
 
 import org.ppijerman.ppijidentitybackend.server.repository.UserRepository;
 import org.slf4j.Logger;

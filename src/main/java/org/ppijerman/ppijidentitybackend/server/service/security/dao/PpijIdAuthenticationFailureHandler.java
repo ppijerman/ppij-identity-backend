@@ -1,4 +1,4 @@
-package org.ppijerman.ppijidentitybackend.server.service.security;
+package org.ppijerman.ppijidentitybackend.server.service.security.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;

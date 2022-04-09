@@ -1,12 +1,10 @@
-package org.ppijerman.ppijidentitybackend.server.service.security;
+package org.ppijerman.ppijidentitybackend.server.service.security.dao;
 
+import org.ppijerman.ppijidentitybackend.server.service.security.encryption.EncryptionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsPasswordService;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 @Component

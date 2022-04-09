@@ -1,4 +1,4 @@
-package org.ppijerman.ppijidentitybackend.server.service.security;
+package org.ppijerman.ppijidentitybackend.server.service.security.encryption;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
