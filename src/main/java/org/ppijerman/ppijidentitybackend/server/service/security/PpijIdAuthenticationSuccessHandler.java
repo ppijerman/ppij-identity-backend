@@ -12,23 +12,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
-public class PpijIdLoginSuccessHandler implements AuthenticationSuccessHandler {
+public class PpijIdAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    private final IpTrialLoggerService ipTrialLoggerService;
+    private final IpRateLimiterService ipRateLimiterService;
 
     private final String LOGIN_SUCCESS_REDIRECT_PATH;
 
     @Autowired
-    public PpijIdLoginSuccessHandler(
-            IpTrialLoggerService ipTrialLoggerService,
+    public PpijIdAuthenticationSuccessHandler(
+            IpRateLimiterService ipRateLimiterService,
             @Value("${ppij-id.security.login-success-redirect-path:/}") String loginSuccessPath
     ) {
-        this.ipTrialLoggerService = ipTrialLoggerService;
+        this.ipRateLimiterService = ipRateLimiterService;
         this.LOGIN_SUCCESS_REDIRECT_PATH = loginSuccessPath;
     }
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
+        final String ip = request.getRemoteAddr();
+        ipRateLimiterService.resetTrialForIp(ip);
+        response.sendRedirect(LOGIN_SUCCESS_REDIRECT_PATH);
     }
 }

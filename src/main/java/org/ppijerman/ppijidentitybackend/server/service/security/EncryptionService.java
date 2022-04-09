@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.encrypt.BytesEncryptor;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.keygen.KeyGenerators;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayOutputStream;
@@ -19,9 +20,9 @@ import java.util.Calendar;
 import java.util.UUID;
 
 @Component
-public class EncryptionService {
+public class EncryptionService implements PasswordEncoder {
 
-    private final Logger log = LoggerFactory.getLogger(EncryptionService.class);
+    private final Logger logger = LoggerFactory.getLogger(EncryptionService.class);
 
     private final BytesEncryptor bytesEncryptor;
     private final int HASH_ROUNDS;
@@ -31,10 +32,20 @@ public class EncryptionService {
         @Value("${ppij-id.security.encryption.hash-rounds:10}") int hashRounds
     ) {
         if (hashRounds > 30) {
-            log.warn("Number of iteration is considered too big ({}/{}).", hashRounds, 30);
+            logger.warn("Number of iteration is considered too big ({}/{}).", hashRounds, 30);
         }
         this.bytesEncryptor = Encryptors.stronger(privateKey, KeyGenerators.string().generateKey());
         this.HASH_ROUNDS = hashRounds;
+    }
+
+    @Override
+    public String encode(CharSequence rawPassword) {
+        return this.hash(rawPassword.toString());
+    }
+
+    @Override
+    public boolean matches(CharSequence rawPassword, String encodedPassword) {
+        return this.encode(rawPassword).equals(encodedPassword);
     }
 
     public String hash(String plainText) {
@@ -53,7 +64,7 @@ public class EncryptionService {
             byte[] readBytes = byteArrayOutputStream.toByteArray();
             return this.encryptBytes(readBytes);
         } catch (IOException e) {
-            log.error("IOException happen when encrypting serializable object with message: {}", e.getMessage());
+            logger.error("IOException happen when encrypting serializable object with message: {}", e.getMessage());
             return null;
         }
     }

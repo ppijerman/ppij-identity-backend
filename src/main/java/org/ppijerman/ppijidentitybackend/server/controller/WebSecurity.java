@@ -1,6 +1,7 @@
 package org.ppijerman.ppijidentitybackend.server.controller;
 
-import org.ppijerman.ppijidentitybackend.server.service.security.PpijIdLoginSuccessHandler;
+import org.ppijerman.ppijidentitybackend.server.service.security.PpijIdAuthenticationFailureHandler;
+import org.ppijerman.ppijidentitybackend.server.service.security.PpijIdAuthenticationSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,11 +12,16 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-    private final PpijIdLoginSuccessHandler ppijIdLoginSuccessHandler;
+    private final PpijIdAuthenticationSuccessHandler ppijIdAuthenticationSuccessHandler;
+    private final PpijIdAuthenticationFailureHandler ppijIdAuthenticationFailureHandler;
 
     @Autowired
-    public WebSecurity(PpijIdLoginSuccessHandler ppijIdLoginSuccessHandler){
-        this.ppijIdLoginSuccessHandler = ppijIdLoginSuccessHandler;
+    public WebSecurity(
+            PpijIdAuthenticationSuccessHandler ppijIdAuthenticationSuccessHandler,
+            PpijIdAuthenticationFailureHandler ppijIdAuthenticationFailureHandler
+    ){
+        this.ppijIdAuthenticationSuccessHandler = ppijIdAuthenticationSuccessHandler;
+        this.ppijIdAuthenticationFailureHandler = ppijIdAuthenticationFailureHandler;
     }
 
     @Override
@@ -34,7 +40,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/login")
                     .permitAll()
-                    .successHandler(this.ppijIdLoginSuccessHandler)
+                    .successHandler(this.ppijIdAuthenticationSuccessHandler)
+                    .failureHandler(this.ppijIdAuthenticationFailureHandler)
                 .and().logout().logoutUrl("/logout").invalidateHttpSession(true).clearAuthentication(true).permitAll();
     }
 }
