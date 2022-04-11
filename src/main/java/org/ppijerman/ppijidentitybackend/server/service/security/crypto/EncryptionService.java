@@ -1,4 +1,4 @@
-package org.ppijerman.ppijidentitybackend.server.service.security.encryption;
+package org.ppijerman.ppijidentitybackend.server.service.security.crypto;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +27,9 @@ public class EncryptionService implements PasswordEncoder {
     private final BytesEncryptor bytesEncryptor;
     private final int HASH_ROUNDS;
 
-    public EncryptionService (
-        @Value("${ppij-id.security.encryption.private-key}") String privateKey,
-        @Value("${ppij-id.security.encryption.hash-rounds:10}") int hashRounds
+    public EncryptionService(
+            @Value("${ppij-id.security.encryption.private-key}") String privateKey,
+            @Value("${ppij-id.security.encryption.hash-rounds:10}") int hashRounds
     ) {
         if (hashRounds > 30) {
             logger.warn("Number of iteration is considered too big ({}/{}).", hashRounds, 30);
@@ -110,4 +110,5 @@ public class EncryptionService implements PasswordEncoder {
         calendar.setTimeInMillis(Instant.parse(this.decryptToString(cipherBytes)).toEpochMilli());
         return calendar;
     }
+
 }
