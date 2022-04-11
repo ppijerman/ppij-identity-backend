@@ -1,6 +1,6 @@
 package org.ppijerman.ppijidentitybackend.server.service.security.dao.authentication;
 
-import org.ppijerman.ppijidentitybackend.server.service.security.encryption.EncryptionService;
+import org.ppijerman.ppijidentitybackend.server.service.security.crypto.CryptoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,10 @@ public class PpijIdAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Autowired
     public PpijIdAuthenticationProvider(
-        EncryptionService encryptionService,
+        CryptoService cryptoService,
         PpijIdUserDetailsService ppijIdUserDetailsService
     ) {
-        this.setPasswordEncoder(encryptionService);
+        this.setPasswordEncoder(cryptoService);
         this.setUserDetailsService(ppijIdUserDetailsService);
         this.setUserDetailsPasswordService(ppijIdUserDetailsService);
     }

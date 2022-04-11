@@ -1,4 +1,4 @@
-package org.ppijerman.ppijidentitybackend.server.service.security.encryption;
+package org.ppijerman.ppijidentitybackend.server.service.security.crypto;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +20,14 @@ import java.util.Calendar;
 import java.util.UUID;
 
 @Component
-public class EncryptionService implements PasswordEncoder {
+public class CryptoService implements PasswordEncoder {
 
-    private final Logger logger = LoggerFactory.getLogger(EncryptionService.class);
+    private final Logger logger = LoggerFactory.getLogger(CryptoService.class);
 
     private final BytesEncryptor bytesEncryptor;
     private final int HASH_ROUNDS;
 
-    public EncryptionService (
+    public CryptoService(
         @Value("${ppij-id.security.encryption.private-key}") String privateKey,
         @Value("${ppij-id.security.encryption.hash-rounds:10}") int hashRounds
     ) {
