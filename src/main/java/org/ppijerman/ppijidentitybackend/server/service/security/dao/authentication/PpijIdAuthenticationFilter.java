@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class PpijIdAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -24,10 +25,11 @@ public class PpijIdAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Autowired
     public PpijIdAuthenticationFilter(
             IpRateLimiterService ipRateLimiterService,
-            List<AuthenticationProvider> authenticationProviderList
+            List<PpijAuthenticationProvider> ppijAuthenticationProviderList
     ) {
         this.ipRateLimiterService = ipRateLimiterService;
-        this.setAuthenticationManager(new ProviderManager(authenticationProviderList));
+        final List<AuthenticationProvider> authenticationProviders = ppijAuthenticationProviderList.stream().map(provider -> (AuthenticationProvider) provider).collect(Collectors.toUnmodifiableList());
+        this.setAuthenticationManager(new ProviderManager(authenticationProviders));
     }
 
     @Override
