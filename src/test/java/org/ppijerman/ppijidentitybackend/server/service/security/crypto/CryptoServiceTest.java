@@ -40,6 +40,12 @@ public class CryptoServiceTest {
     }
 
     @Test
+    public void testEncryptAndDecryptSerializable() {
+        String plainText = "This is serializable";
+        assertEquals(plainText, cryptoService.decrypt(cryptoService.encrypt(plainText)));
+    }
+
+    @Test
     public void testEncryptAndDecryptUUID() {
         UUID uuid = UUID.randomUUID();
         assertEquals(uuid, cryptoService.decryptToUUID(cryptoService.encryptUUID(uuid)));

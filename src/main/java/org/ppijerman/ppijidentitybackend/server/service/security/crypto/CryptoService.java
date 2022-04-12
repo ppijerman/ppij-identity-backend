@@ -93,8 +93,29 @@ public class CryptoService implements PasswordEncoder {
             return this.encryptBytes(readBytes);
         } catch (IOException e) {
             log.error("IOException happen when encrypting serializable object with message: {}", e.getMessage());
-            return null;
         }
+        return null;
+    }
+
+    public Object decrypt(final byte[] cipherBytes) {
+        byte[] plainBytes = bytesEncryptor.decrypt(cipherBytes);
+        try (
+                ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(plainBytes);
+                ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream)
+        ) {
+            Object object = objectInputStream.readObject();
+
+            if (!(object instanceof Serializable)) {
+                log.warn("Object decrypted from non serializable class!");
+            }
+
+            return object;
+        } catch (IOException e) {
+            log.error("IOException happen when encrypting serializable object with message: {}", e.getMessage());
+        } catch (ClassNotFoundException e) {
+            log.error("Cannot find the class of decrypted object!");
+        }
+        return null;
     }
 
     public byte[] encryptBytes(final byte[] plainBytes) {
