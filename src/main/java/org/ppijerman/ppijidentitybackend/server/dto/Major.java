@@ -13,9 +13,9 @@ import java.util.UUID;
 @Table(name="MAJOR", schema="CENSUS")
 public class Major {
     @Id
-    @Column(name="major_id", columnDefinition = "uuid")
-    private UUID majorID;
+    @Column(name="major_id", columnDefinition = "UUID")
+    private UUID majorId;
 
-    @Column(name="major_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
+    @Column(name="major_name", columnDefinition="VARCHAR(40)", length = 40, nullable=false)
     private String majorName;
 }

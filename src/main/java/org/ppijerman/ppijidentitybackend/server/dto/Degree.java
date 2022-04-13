@@ -12,7 +12,6 @@ import java.util.UUID;
 @Data
 @Table(name="DEGREE", schema="CENSUS")
 public class Degree {
-    // TODO: Generated Value or use setter?
     @Id
     @Column(name="degree_id", columnDefinition = "uuid")
     private UUID degree_id;

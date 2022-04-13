@@ -14,7 +14,7 @@ import java.util.UUID;
 public class City {
     @Id
     @Column(name="city_id", columnDefinition = "uuid")
-    private UUID cityID;
+    private UUID cityId;
 
     @Column(name="city_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String cityName;

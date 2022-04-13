@@ -11,13 +11,13 @@ import java.util.UUID;
 @Table(name="INSTITUTE", schema="CENSUS")
 public class Institute {
     @Id
-    @Column(name="institute_id", columnDefinition = "uuid")
-    private UUID instituteID;
+    @Column(name="institute_id", columnDefinition = "UUID")
+    private UUID instituteId;
 
     @Column(name="institute_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
-    private String institute_name;
+    private String instituteName;
 
-    @Column(name="phone", columnDefinition="VARCHAR(50)", length = 20)
+    @Column(name="phone", columnDefinition="VARCHAR(20)", length = 20)
     private String phone;
 
     @Column(name="email", columnDefinition="VARCHAR(50)", length = 50)
@@ -30,5 +30,9 @@ public class Institute {
     private String street;
 
     @Column(name="street_number", columnDefinition="VARCHAR(5)", length = 5)
-    private String street_number;
+    private String streetNumber;
+
+    @OneToOne
+    @JoinColumn(name = "city_id", columnDefinition = "UUID")
+    private City city;
 }

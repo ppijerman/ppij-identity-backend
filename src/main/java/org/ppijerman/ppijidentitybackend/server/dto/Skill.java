@@ -10,20 +10,20 @@ import java.util.UUID;
 @Table(name="SKILL", schema="CENSUS")
 public class Skill {
     @Id
-    @Column(name="skill_id", columnDefinition = "uuid")
-    private UUID skillID;
+    @Column(name="skill_id", columnDefinition = "UUID")
+    private UUID skillId;
 
     @Column(name="skill_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String skillName;
 
-    @Column(name="is_available", columnDefinition="boolean", nullable=false)
-    private String isAvailable;
+    @Column(name="is_available", columnDefinition="BOOLEAN", nullable=false)
+    private boolean isAvailable;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "person_id", columnDefinition="UUID", nullable=false)
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", columnDefinition="UUID", nullable=false)
     private Category category;
 }

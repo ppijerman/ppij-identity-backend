@@ -11,8 +11,8 @@ import java.util.UUID;
 @Table(name="BRANCH", schema="CENSUS")
 public class Branch {
     @Id
-    @Column(name="branch_id", columnDefinition = "uuid")
-    private UUID branchID;
+    @Column(name="branch_id", columnDefinition = "UUID")
+    private UUID branchId;
 
     @Column(name="branch_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String branchName;
@@ -20,8 +20,9 @@ public class Branch {
     @Column(name="email", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String email;
 
-    @Column(name="leader", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
-    private String leader;
+    @OneToOne
+    @JoinColumn(name="leader_id", columnDefinition="UUID", nullable=false)
+    private Person leader;
 
     @Column(name="phone", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String phone;

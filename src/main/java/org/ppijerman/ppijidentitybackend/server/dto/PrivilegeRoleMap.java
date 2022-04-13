@@ -14,10 +14,10 @@ public class PrivilegeRoleMap {
 
 
     @ManyToMany
-    @JoinColumn(name="privilege_id")
+    @JoinColumn(name="privilege_id", columnDefinition = "UUID", nullable = false)
     private List<Privilege> privilege;
 
     @ManyToMany
-    @JoinColumn(name="role_id")
+    @JoinColumn(name="role_id", columnDefinition = "UUID", nullable = false)
     private List<Role> role;
 }

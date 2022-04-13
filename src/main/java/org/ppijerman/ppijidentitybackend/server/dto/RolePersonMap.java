@@ -10,17 +10,14 @@ import java.util.UUID;
 @Data
 @Table(name="ROLE_PERSON_MAP", schema="CENSUS")
 public class RolePersonMap {
-
-
     @EmbeddedId
     private RolePersonMapId id;
 
-
     @ManyToMany
-    @JoinColumn(name="person_id")
+    @JoinColumn(name="person_id", columnDefinition = "UUID", nullable = false)
     private List<Person> person;
 
     @ManyToMany
-    @JoinColumn(name="role_id")
+    @JoinColumn(name="role_id", columnDefinition = "UUID", nullable = false)
     private List<Role> role;
 }

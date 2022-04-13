@@ -13,35 +13,35 @@ import java.util.UUID;
 public class Education {
     @Id
     @Column(name="education_id", columnDefinition = "uuid")
-    private UUID education_id;
+    private UUID educationId;
 
-    @Column(name="start_date", nullable=false)
+    @Column(name="start_date", columnDefinition = "DATE", nullable=false)
     @Temporal(TemporalType.DATE)
     private Calendar startDate;
 
-    @Column(name="end_date")
+    @Column(name="end_date", columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     private Calendar endDate;
 
 
     @ManyToOne
-    @JoinColumn(name = "institute_id")
-    private Institute instituteID;
+    @JoinColumn(name = "person_id", columnDefinition = "UUID", nullable=false)
+    private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
-    private Person personID;
+    @JoinColumn(name = "degree_id", columnDefinition = "UUID", nullable=false)
+    private Degree degree;
 
-    @OneToOne
-    @JoinColumn(name = "degree_id")
-    private Degree degreeID;
+    @ManyToOne
+    @JoinColumn(name = "major_id", columnDefinition = "UUID", nullable=false)
+    private Major major;
 
-    @OneToMany
-    @JoinColumn(name = "major_id")
-    private List<Major> major;
-
-    @OneToOne
-    @JoinColumn(name = "funding_id")
+    @ManyToOne
+    @JoinColumn(name = "funding_id", columnDefinition = "UUID", nullable=false)
     private Funding funding;
+
+    @ManyToOne
+    @JoinColumn(name = "institute_id", columnDefinition = "UUID", nullable=false)
+    private Institute institute;
 
 }

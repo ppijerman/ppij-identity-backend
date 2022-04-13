@@ -10,13 +10,16 @@ import java.util.UUID;
 @Table(name="FUNDING", schema="CENSUS")
 public class Funding {
     @Id
-    @Column(name="funding_id", columnDefinition = "uuid")
-    private UUID fundingID;
+    @Column(name="funding_id", columnDefinition = "UUID")
+    private UUID fundingId;
 
-    @Column(name="funding_type", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
+    @Column(name="funding_type", columnDefinition="VARCHAR", nullable=false)
     private String fundingType;
 
-    @OneToOne
-    @JoinColumn(name = "institute")
-    private Institute institute;
+    @Column(name="funding_name", columnDefinition="VARCHAR", nullable=false)
+    private String fundingName;
+
+//    @OneToOne
+//    @JoinColumn(name = "institute")
+//    private Institute institute;
 }

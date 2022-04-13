@@ -7,8 +7,8 @@ import java.util.UUID;
 
 @Embeddable
 public class PrivilegeRoleMapId implements Serializable {
-    @Column(name = "role_id")
-    private UUID roleID;
-    @Column(name = "privilege_id")
-    private UUID privilegeID;
+    @Column(name = "role_id", columnDefinition = "UUID", nullable = false)
+    private UUID roleId;
+    @Column(name = "privilege_id", columnDefinition = "UUID", nullable = false)
+    private UUID privilegeId;
 }

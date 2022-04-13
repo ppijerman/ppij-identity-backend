@@ -13,9 +13,9 @@ import java.util.UUID;
 @Table(name="ROLE", schema="CENSUS")
 public class Role {
     @Id
-    @Column(name="role_id", columnDefinition = "uuid")
-    private UUID roleID;
+    @Column(name="role_id", columnDefinition = "UUID")
+    private UUID roleId;
 
-    @Column(name="role_name", columnDefinition="VARCHAR(50)", length = 20, nullable=false)
+    @Column(name="role_name", columnDefinition="VARCHAR(20)", length = 20, nullable=false)
     private String roleName;
 }

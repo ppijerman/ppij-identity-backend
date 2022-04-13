@@ -7,8 +7,8 @@ import java.util.UUID;
 
 @Embeddable
 public class RolePersonMapId implements Serializable {
-    @Column(name = "role_id")
+    @Column(name = "role_id", columnDefinition = "UUID", nullable = false)
     private UUID roleId;
-    @Column(name = "person_id")
+    @Column(name = "person_id", columnDefinition = "UUID", nullable = false)
     private UUID personId;
 }

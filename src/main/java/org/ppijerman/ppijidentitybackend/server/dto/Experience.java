@@ -11,34 +11,34 @@ import java.util.UUID;
 @Table(name="EXPERIENCE", schema="CENSUS")
 public class Experience {
     @Id
-    @Column(name="experience_id", columnDefinition = "uuid")
-    private UUID experienceID;
+    @Column(name="experience_id", columnDefinition = "UUID")
+    private UUID experienceId;
 
     @Column(name="experience_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
     private String experienceName;
 
-    @Column(name="is_international", columnDefinition="boolean", nullable=false)
-    private String isInternational;
+    @Column(name="is_international", columnDefinition="BOOLEAN", nullable=false)
+    private boolean isInternational;
 
-    @Column(name="start_date")
+    @Column(name="start_date", columnDefinition = "DATE", nullable = false)
     @Temporal(TemporalType.DATE)
     private Calendar startDate;
 
-    @Column(name="end_date")
+    @Column(name="end_date", columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     private Calendar endDate;
 
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
+    @JoinColumn(name = "person_id", columnDefinition = "UUID", nullable = false)
     private Person person;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_id", columnDefinition = "INTEGER", nullable = false)
     private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
+    @JoinColumn(name = "type_id", columnDefinition = "UUID", nullable = false)
     private ExperienceType experienceType;
 
 }

@@ -13,10 +13,10 @@ import java.util.UUID;
 public class Person {
 
     @Id
-    @Column(name="person_id", columnDefinition = "uuid")
+    @Column(name="person_id", columnDefinition = "UUID")
     private UUID personId;
 
-    @Column(name="name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
+    @Column(name="name", columnDefinition="VARCHAR(100)", length = 100, nullable=false)
     private String name;
 
     @Column(name="birth_date", columnDefinition="DATE", nullable=false)
@@ -41,25 +41,25 @@ public class Person {
     @Column(name="status", columnDefinition="boolean")
     private boolean status;
 
-    @Column(name="last_verified", columnDefinition="DATE", nullable=false)
+    @Column(name="last_verified", columnDefinition="DATE")
     @Temporal(TemporalType.DATE)
     private Calendar lastVerified;
 
     @Column(name="zipcode", columnDefinition="VARCHAR(10)", length = 10, nullable=false)
     private String zipcode;
 
-    @Column(name="street", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
+    @Column(name="street", columnDefinition="VARCHAR(50)", length = 50)
     private String street;
 
-    @Column(name="street_number", columnDefinition="VARCHAR(5)", length = 5, nullable=false)
+    @Column(name="street_number", columnDefinition="VARCHAR(5)", length = 5)
     private String streetNumber;
 
     @ManyToOne
-    @JoinColumn(name = "branch_id")
+    @JoinColumn(name = "branch_id", columnDefinition = "UUID")
     private Branch branch;
 
     @ManyToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", columnDefinition = "UUID")
     private City city;
 
 

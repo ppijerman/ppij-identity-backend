@@ -11,15 +11,16 @@ import java.util.List;
 @Table(name="REFRESH_TOKEN", schema="CENSUS")
 public class RefreshToken {
     @Id
-    @Column(name="refresh_token", columnDefinition = "VARCHAR(64)")
+    @Column(name="refresh_token", columnDefinition = "VARCHAR(64)", length = 64)
     private String refreshToken;
 
-    @Column(name="expiration_time", nullable=false)
+//  check if run
+    @Column(name="expiration_time", columnDefinition = "time without time zone", nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp expirationTime;
 
-    @OneToMany
-    @JoinColumn(name = "application_id")
-    private List<Application> applications;
+    @ManyToOne
+    @JoinColumn(name = "application_id", columnDefinition = "UUID", nullable = false)
+    private Application application;
 
 }

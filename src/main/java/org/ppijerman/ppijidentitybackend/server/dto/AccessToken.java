@@ -13,15 +13,16 @@ import java.util.UUID;
 @Table(name="ACCESS_TOKEN", schema="CENSUS")
 public class AccessToken {
     @Id
-    @Column(name="access_token", columnDefinition = "VARCHAR(64)")
+    @Column(name="access_token", columnDefinition = "VARCHAR(64)", length = 64)
     private String accessToken;
 
-    @Column(name="expiration_time", nullable=false)
+//    check if run
+    @Column(name="expiration_time", columnDefinition = "time without time zone", nullable=false)
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp expirationTime;
 
-    @OneToMany
-    @JoinColumn(name = "application_id")
-    private List<Application> applications;
+    @ManyToOne
+    @JoinColumn(name = "application_id", columnDefinition = "UUID", nullable = false)
+    private Application application;
 
 }
