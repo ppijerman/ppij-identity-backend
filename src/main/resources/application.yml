@@ -1,26 +1,38 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
 spring:
   datasource:
-    url: jdbc:postgresql://$DATABASE_HOST:$DATABASE_PORT/$DATABASE_NAME
-    username: $DATABASE_USERNAME
-    password: $DATABASE_PASSWORD
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/registration
   session:
     jdbc:
       initialize-schema: always
   jpa:
-    defer-datasource-initialization: on
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
   mail:
     default-encoding: UTF-8
-    host: smtp.mailtrap.io
-    username: 50e3a266646fe1
-    password: f24fd78edff307
-    port: 2525
+    host: localhost
+    username: hello
+    password: hello
+    port: 1025
     properties:
       mail:
         smtp:
+          ssl:
+            trust: "*"
           auth: true
           starttls:
             enable: true
+          connectiontimeout: 5000
+          timeout: 3000
+          writetimeout: 5000
     protocol: smtp
     test-connection: false
   autoconfigure:
