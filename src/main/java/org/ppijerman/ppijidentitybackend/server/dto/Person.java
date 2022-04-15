@@ -2,7 +2,7 @@ package org.ppijerman.ppijidentitybackend.server.dto;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+//This class is a dummy for the real Person class
 @Entity
 
 @Table(name = "person")

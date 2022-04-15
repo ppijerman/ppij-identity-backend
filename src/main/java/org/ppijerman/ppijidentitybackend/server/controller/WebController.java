@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 
 @Controller
@@ -32,14 +31,6 @@ public class WebController {
         return "login";
     }
 
-
-    @GetMapping("/users")
-    public String listUsers(Model model) {
-        List<Person> listPeople = personRepository.findAll();
-        model.addAttribute("listUsers", listPeople);
-
-        return "users";
-    }
 
     @GetMapping("/privacy-policy")
     public String privacyPolicy() { return "privacy-policy"; }
