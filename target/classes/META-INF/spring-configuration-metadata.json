@@ -1,0 +1,16 @@
+{
+  "groups": [],
+  "properties": [
+    {
+      "name": "ppij-id.security.lockoff.cooldown",
+      "type": "java.lang.String",
+      "description": "Cooldown of an IP after locked out in seconds."
+    },
+    {
+      "name": "ppij-id.security.lockoff.limit",
+      "type": "java.lang.String",
+      "description": "Limit of trial of an IP."
+    }
+  ],
+  "hints": []
+}
