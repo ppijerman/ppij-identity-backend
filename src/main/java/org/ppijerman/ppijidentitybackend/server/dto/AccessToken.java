@@ -3,6 +3,7 @@ package org.ppijerman.ppijidentitybackend.server.dto;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
@@ -18,7 +19,7 @@ public class AccessToken {
 
 //    check if run
     @Column(name="expiration_time", columnDefinition = "time without time zone", nullable=false)
-    @Temporal(TemporalType.TIMESTAMP)
+//    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp expirationTime;
 
     @ManyToOne
