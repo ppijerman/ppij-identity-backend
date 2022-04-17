@@ -5,6 +5,9 @@ server:
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/registration
+    password: "!Automation01"
+    username: postgres
+    driver-class-name: org.postgresql.Driver
   session:
     jdbc:
       initialize-schema: always
@@ -35,5 +38,3 @@ spring:
           writetimeout: 5000
     protocol: smtp
     test-connection: false
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
