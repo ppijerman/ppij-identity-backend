@@ -7,16 +7,16 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name="FUNDING", schema="CENSUS")
+@Table(name = "Funding", schema = "CENSUS")
 public class Funding {
     @Id
-    @Column(name="funding_id", columnDefinition = "uuid")
-    private UUID fundingID;
+    @Column(name = "funding_id", columnDefinition = "uuid default uuid_generate_v4()")
+    private UUID fundingId;
 
-    @Column(name="funding_type", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
+    @Column(name = "funding_type", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
     private String fundingType;
 
-    @OneToOne
-    @JoinColumn(name = "institute")
-    private Institute institute;
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "funding_institution_id", nullable = false)
+    private Institution fundingInstitution;
 }

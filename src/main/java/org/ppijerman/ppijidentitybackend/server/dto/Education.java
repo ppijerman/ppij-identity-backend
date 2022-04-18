@@ -9,39 +9,38 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name="EDUCATION", schema="CENSUS")
+@Table(name = "Education", schema = "CENSUS")
 public class Education {
     @Id
-    @Column(name="education_id", columnDefinition = "uuid")
-    private UUID education_id;
+    @Column(name = "education_id", columnDefinition = "uuid default uuid_generate_v4()")
+    private UUID educationId;
 
-    @Column(name="start_date", nullable=false)
+    @Column(name = "education_start_date", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar startDate;
+    private Calendar educationStartDate;
 
-    @Column(name="end_date")
+    @Column(name = "education_end_date")
     @Temporal(TemporalType.DATE)
-    private Calendar endDate;
+    private Calendar educationEndDate;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "education_institution_id", nullable = false)
+    private Institution educationInstitution;
 
-    @ManyToOne
-    @JoinColumn(name = "institute_id")
-    private Institute instituteID;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "education_person_id", nullable = false)
+    private Person educationPerson;
 
-    @ManyToOne
-    @JoinColumn(name = "person_id")
-    private Person personID;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "education_degree_id", nullable = false)
+    private Degree educationDegree;
 
-    @OneToOne
-    @JoinColumn(name = "degree_id")
-    private Degree degreeID;
+    @OneToMany(targetEntity = Major.class)
+    @JoinColumn(name = "education_major_id", nullable = false)
+    private List<Major> educationMajor;
 
-    @OneToMany
-    @JoinColumn(name = "major_id")
-    private List<Major> major;
-
-    @OneToOne
-    @JoinColumn(name = "funding_id")
-    private Funding funding;
+    @OneToOne(optional = false)
+    @JoinColumn(name = "education_funding_id", nullable = false)
+    private Funding educationFunding;
 
 }

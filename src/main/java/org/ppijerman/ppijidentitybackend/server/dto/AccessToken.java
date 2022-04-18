@@ -4,24 +4,20 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Data
-@Table(name="ACCESS_TOKEN", schema="CENSUS")
+@Table(name = "Access_Token", schema = "CENSUS")
 public class AccessToken {
     @Id
-    @Column(name="access_token", columnDefinition = "VARCHAR(64)")
+    @Column(name = "access_token", columnDefinition = "VARCHAR(64)")
     private String accessToken;
 
-    @Column(name="expiration_time", nullable=false)
+    @Column(name = "access_token_expiration_time", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp expirationTime;
+    private Timestamp accessTokenExpirationTime;
 
-    @OneToMany
-    @JoinColumn(name = "application_id")
-    private List<Application> applications;
-
+    @OneToOne(optional = false)
+    @JoinColumn(name = "access_token_application_id", nullable = false)
+    private Application accessTokenApplication;
 }

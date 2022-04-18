@@ -4,22 +4,20 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Entity
 @Data
-@Table(name="REFRESH_TOKEN", schema="CENSUS")
+@Table(name = "Refresh_Token", schema = "CENSUS")
 public class RefreshToken {
     @Id
-    @Column(name="refresh_token", columnDefinition = "VARCHAR(64)")
+    @Column(name = "refresh_token", columnDefinition = "VARCHAR(64)")
     private String refreshToken;
 
-    @Column(name="expiration_time", nullable=false)
+    @Column(name = "refresh_token_expiration_time", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp expirationTime;
+    private Timestamp refreshTokenExpirationTime;
 
-    @OneToMany
-    @JoinColumn(name = "application_id")
-    private List<Application> applications;
-
+    @OneToOne(optional = false)
+    @JoinColumn(name = "refresh_token_application_id", nullable = false)
+    private Application refreshTokenApplication;
 }

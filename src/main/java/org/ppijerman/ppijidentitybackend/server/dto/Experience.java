@@ -8,37 +8,36 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name="EXPERIENCE", schema="CENSUS")
+@Table(name = "Experience", schema = "CENSUS")
 public class Experience {
     @Id
-    @Column(name="experience_id", columnDefinition = "uuid")
-    private UUID experienceID;
+    @Column(name = "experience_id", columnDefinition = "uuid default uuid_generate_v4()")
+    private UUID experienceId;
 
-    @Column(name="experience_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
+    @Column(name = "experience_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
     private String experienceName;
 
-    @Column(name="is_international", columnDefinition="boolean", nullable=false)
-    private String isInternational;
+    @Column(name = "experience_is_international", columnDefinition = "boolean", nullable = false)
+    private String experienceIsInternational;
 
-    @Column(name="start_date")
+    @Column(name = "experience_start_date", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar startDate;
+    private Calendar experienceStartDate;
 
-    @Column(name="end_date")
+    @Column(name = "experience_end_date")
     @Temporal(TemporalType.DATE)
-    private Calendar endDate;
+    private Calendar experienceEndDate;
 
-
-    @ManyToOne
-    @JoinColumn(name = "person_id")
-    private Person person;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "experience_person_id", nullable = false)
+    private Person experiencePerson;
 
     @ManyToOne
-    @JoinColumn(name = "type_id")
+    @JoinColumn(name = "experience_category_id")
+    private Category experienceCategory;
+
+    @ManyToOne
+    @JoinColumn(name = "experience_type_id", nullable = false)
     private ExperienceType experienceType;
 
 }

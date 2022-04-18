@@ -10,13 +10,13 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name="DEGREE", schema="CENSUS")
+@Table(name = "Degree", schema = "CENSUS")
 public class Degree {
     // TODO: Generated Value or use setter?
     @Id
-    @Column(name="degree_id", columnDefinition = "uuid")
-    private UUID degree_id;
+    @Column(name = "degree_id", columnDefinition = "uuid default uuid_generate_v4()")
+    private UUID degreeId;
 
-    @Column(name="degree", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
-    private String degree;
+    @Column(name = "degree_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
+    private String degreeName;
 }

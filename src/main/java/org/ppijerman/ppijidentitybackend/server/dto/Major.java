@@ -10,12 +10,12 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name="MAJOR", schema="CENSUS")
+@Table(name = "Major", schema = "CENSUS")
 public class Major {
     @Id
-    @Column(name="major_id", columnDefinition = "uuid")
+    @Column(name = "major_id", columnDefinition = "uuid default uuid_generate_v4()")
     private UUID majorID;
 
-    @Column(name="major_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
+    @Column(name = "major_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
     private String majorName;
 }

@@ -7,23 +7,23 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name="SKILL", schema="CENSUS")
+@Table(name = "Skill", schema = "CENSUS")
 public class Skill {
     @Id
-    @Column(name="skill_id", columnDefinition = "uuid")
+    @Column(name = "skill_id", columnDefinition = "uuid")
     private UUID skillID;
 
-    @Column(name="skill_name", columnDefinition="VARCHAR(50)", length = 50, nullable=false)
+    @Column(name = "skill_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
     private String skillName;
 
-    @Column(name="is_available", columnDefinition="boolean", nullable=false)
-    private String isAvailable;
+    @Column(name = "skill_is_available", columnDefinition = "boolean", nullable = false)
+    private boolean skillIsAvailable;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "skill_person_id", nullable = false)
+    private Person skillPerson;
 
     @ManyToOne
-    @JoinColumn(name = "person_id")
-    private Person person;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @JoinColumn(name = "skill_category_id")
+    private Category skillCategory;
 }
