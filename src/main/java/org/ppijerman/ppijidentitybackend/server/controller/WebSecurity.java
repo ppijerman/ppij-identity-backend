@@ -33,8 +33,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "/api/v*/registration/**"
                 ).permitAll()
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").permitAll()
-                .and().logout().logoutUrl("/logout").invalidateHttpSession(true).clearAuthentication(true).permitAll();
+                .and().formLogin();
+        /* Commented for testing purpose
+        .loginPage("/login").permitAll()
+                .and().logout().logoutUrl("/logout").invalidateHttpSession(true).clearAuthentication(true).permitAll() */
     }
 
     @Override
