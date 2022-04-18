@@ -39,10 +39,4 @@ public class Application {
             inverseJoinColumns = @JoinColumn(name = "privilege_id")
     )
     private List<Privilege> applicationPrivilege;
-
-    @OneToOne(targetEntity = AccessToken.class, cascade = CascadeType.ALL)
-    private AccessToken applicationAccessToken;
-
-    @OneToOne(targetEntity = RefreshToken.class, cascade = CascadeType.ALL)
-    private RefreshToken applicationRefreshToken;
 }
