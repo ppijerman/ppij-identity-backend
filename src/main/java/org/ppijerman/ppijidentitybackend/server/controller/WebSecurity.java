@@ -23,14 +23,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity
-                .cors()
-                .and().authorizeRequests()
-                .antMatchers(
-                        "/",
-                        "/privacy-policy",
-                        "/about",
-                        "/register",
-                        "/api/v*/registration/**"
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/v*/registration/**"
                 ).permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin();
