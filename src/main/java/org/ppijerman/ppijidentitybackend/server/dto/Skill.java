@@ -11,7 +11,7 @@ import java.util.UUID;
 public class Skill {
     @Id
     @Column(name = "skill_id", columnDefinition = "uuid")
-    private UUID skillID;
+    private UUID skillId;
 
     @Column(name = "skill_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
     private String skillName;

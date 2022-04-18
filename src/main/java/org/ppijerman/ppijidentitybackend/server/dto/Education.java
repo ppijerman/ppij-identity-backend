@@ -35,9 +35,9 @@ public class Education {
     @JoinColumn(name = "education_degree_id", nullable = false)
     private Degree educationDegree;
 
-    @OneToMany(targetEntity = Major.class)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "education_major_id", nullable = false)
-    private List<Major> educationMajor;
+    private Major educationMajor;
 
     @OneToOne(optional = false)
     @JoinColumn(name = "education_funding_id", nullable = false)

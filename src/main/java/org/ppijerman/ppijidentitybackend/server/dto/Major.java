@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Major {
     @Id
     @Column(name = "major_id", columnDefinition = "uuid default uuid_generate_v4()")
-    private UUID majorID;
+    private UUID majorId;
 
     @Column(name = "major_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
     private String majorName;
