@@ -16,7 +16,6 @@ public class Funding {
     @Column(name = "funding_type", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
     private String fundingType;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "funding_institution_id", nullable = false)
-    private Institution fundingInstitution;
+    @Column(name = "funding_institution", columnDefinition = "VARCHAR(255)", length = 255, nullable = false)
+    private String fundingInstitution;
 }

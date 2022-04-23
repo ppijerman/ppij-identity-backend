@@ -10,7 +10,7 @@ import java.util.UUID;
 @Table(name = "Skill", schema = "CENSUS")
 public class Skill {
     @Id
-    @Column(name = "skill_id", columnDefinition = "uuid")
+    @Column(name = "skill_id", columnDefinition = "uuid default uuid_generate_v4()")
     private UUID skillId;
 
     @Column(name = "skill_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
@@ -24,6 +24,6 @@ public class Skill {
     private Person skillPerson;
 
     @ManyToOne
-    @JoinColumn(name = "skill_category_id")
+    @JoinColumn(name = "skill_category_id", columnDefinition = "uuid", nullable = false)
     private Category skillCategory;
 }

@@ -19,7 +19,7 @@ public class Institution {
     @Column(name = "institution_phone", columnDefinition = "VARCHAR(20)", length = 20)
     private String institutionPhone;
 
-    @Column(name = "institution_email", columnDefinition = "VARCHAR(50)", length = 50)
+    @Column(name = "institution_email", columnDefinition = "VARCHAR(100)", length = 100)
     private String institutionEmail;
 
     @Column(name = "institution_zipcode", columnDefinition = "VARCHAR(10)", length = 10)

@@ -14,7 +14,7 @@ public class Experience {
     @Column(name = "experience_id", columnDefinition = "uuid default uuid_generate_v4()")
     private UUID experienceId;
 
-    @Column(name = "experience_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
+    @Column(name = "experience_name", columnDefinition = "VARCHAR(255)", length = 255, nullable = false)
     private String experienceName;
 
     @Column(name = "experience_is_international", columnDefinition = "boolean", nullable = false)

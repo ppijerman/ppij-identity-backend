@@ -14,7 +14,7 @@ public class Role {
     @Column(name = "role_id", columnDefinition = "uuid default uuid_generate_v4()")
     private UUID roleId;
 
-    @Column(name = "role_name", columnDefinition = "VARCHAR(50)", length = 20, nullable = false)
+    @Column(name = "role_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
     private String roleName;
 
     @ManyToMany

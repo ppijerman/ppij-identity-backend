@@ -16,7 +16,7 @@ public class Branch {
     @Column(name = "branch_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
     private String branchName;
 
-    @Column(name = "branch_email", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
+    @Column(name = "branch_email", columnDefinition = "VARCHAR(100)", length = 50, nullable = false)
     private String branchEmail;
 
     @OneToOne(optional = false)
@@ -29,8 +29,8 @@ public class Branch {
     @Column(name = "branch_website", columnDefinition = "VARCHAR(50)", length = 50)
     private String branchWebsite;
 
-    @Column(name = "branch_facebook", columnDefinition = "VARCHAR(50)", length = 50)
-    private String branchFacebook;
+    @Column(name = "branch_facebook_page", columnDefinition = "VARCHAR(100)", length = 100)
+    private String branchFacebookPage;
 
     @Column(name = "branch_instagram", columnDefinition = "VARCHAR(50)", length = 50)
     private String branchInstagram;

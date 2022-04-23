@@ -16,6 +16,6 @@ public class Privilege {
     @Column(name = "privilege_id", columnDefinition = "uuid default uuid_generate_v4()")
     private UUID privilegeId;
 
-    @Column(name = "privilege_name", columnDefinition = "VARCHAR(20)", length = 20, nullable = false)
+    @Column(name = "privilege_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
     private String privilegeName;
 }

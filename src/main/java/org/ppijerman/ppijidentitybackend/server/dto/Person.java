@@ -28,14 +28,17 @@ public class Person {
     @Column(name = "person_phone", columnDefinition = "VARCHAR(20)", length = 20, nullable = false)
     private String personPhone;
 
-    @Column(name = "person_email", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
+    @Column(name = "person_email", columnDefinition = "VARCHAR(100)", length = 100, nullable = false)
     private String personEmail;
 
     @Column(name = "person_password", columnDefinition = "VARCHAR(60)", length = 60, nullable = false)
     private String personPassword;
 
-    @Column(name = "person_uni_email", columnDefinition = "VARCHAR(50)", length = 50)
+    @Column(name = "person_uni_email", columnDefinition = "VARCHAR(100)", length = 100)
     private String personUniEmail;
+
+    @Column(name = "person_status", columnDefinition = "VARCHAR(30)", length = 30)
+    private String personStatus;
 
     @Column(name = "person_is_email_verified", columnDefinition = "boolean", nullable = false)
     private boolean personIsEmailVerified;
