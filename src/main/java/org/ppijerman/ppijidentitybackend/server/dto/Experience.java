@@ -1,13 +1,19 @@
 package org.ppijerman.ppijidentitybackend.server.dto;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Builder
 @Table(name = "\"Experience\"", schema = "CENSUS")
 public class Experience {
     @Id
@@ -39,4 +45,17 @@ public class Experience {
     @ManyToOne
     @JoinColumn(name = "experience_type_id", nullable = false)
     private ExperienceType experienceType;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Experience that = (Experience) o;
+        return experienceId != null && Objects.equals(experienceId, that.experienceId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

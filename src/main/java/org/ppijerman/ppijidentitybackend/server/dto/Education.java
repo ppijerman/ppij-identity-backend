@@ -1,14 +1,20 @@
 package org.ppijerman.ppijidentitybackend.server.dto;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Builder
 @Table(name = "\"Education\"", schema = "CENSUS")
 public class Education {
     @Id
@@ -40,5 +46,19 @@ public class Education {
     private Major educationMajor;
 
     @OneToMany(mappedBy = "fundingEducation", orphanRemoval = true)
+    @ToString.Exclude
     private List<Funding> educationFundings;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Education education = (Education) o;
+        return educationId != null && Objects.equals(educationId, education.educationId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

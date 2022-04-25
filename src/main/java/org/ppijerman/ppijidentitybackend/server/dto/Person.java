@@ -1,16 +1,18 @@
 package org.ppijerman.ppijidentitybackend.server.dto;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
+@Builder
+@ToString
 @Table(name = "\"Person\"", schema = "CENSUS")
 public class Person {
     @Id
@@ -44,6 +46,7 @@ public class Person {
             read = "CAST(pgp_sym_decrypt(person_phone, current_setting('sym_password')) AS TEXT)",
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
+    @Setter
     private String personPhone;
 
     @Column(name = "person_email", columnDefinition = "BYTEA", nullable = false)
@@ -68,6 +71,7 @@ public class Person {
             read = "CAST(pgp_sym_decrypt(person_uni_email, current_setting('sym_password')) AS TEXT)",
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
+    @Setter
     private String personUniEmail;
 
     // We don't encrypt this to prevent dictionary attack
@@ -122,17 +126,35 @@ public class Person {
             joinColumns = @JoinColumn(name = "person_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
+    @ToString.Exclude
     private List<Role> personRole;
 
     @OneToMany(mappedBy = "educationPerson", orphanRemoval = true)
+    @ToString.Exclude
     private List<Education> educations;
 
     @OneToMany(mappedBy = "applicationOwner", orphanRemoval = true)
+    @ToString.Exclude
     private List<Application> applications;
 
     @OneToMany(mappedBy = "experiencePerson", orphanRemoval = true)
+    @ToString.Exclude
     private List<Experience> experiences;
 
     @OneToMany(mappedBy = "skillPerson", orphanRemoval = true)
+    @ToString.Exclude
     private List<Skill> skills;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Person person = (Person) o;
+        return personId != null && Objects.equals(personId, person.personId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

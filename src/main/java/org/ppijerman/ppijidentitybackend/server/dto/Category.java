@@ -1,13 +1,19 @@
 package org.ppijerman.ppijidentitybackend.server.dto;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Builder
 @Table(name = "\"Category\"", schema = "CENSUS")
 public class Category {
     @Id
@@ -18,8 +24,23 @@ public class Category {
     private String categoryName;
 
     @OneToMany(mappedBy = "experienceCategory")
+    @ToString.Exclude
     private List<Experience> experiences;
 
     @OneToMany(mappedBy = "skillCategory")
+    @ToString.Exclude
     private List<Skill> skills;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Category category = (Category) o;
+        return categoryId != null && Objects.equals(categoryId, category.categoryId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

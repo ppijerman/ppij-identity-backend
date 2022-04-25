@@ -1,12 +1,18 @@
 package org.ppijerman.ppijidentitybackend.server.dto;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Builder
 @Table(name = "\"Funding\"", schema = "CENSUS")
 public class Funding {
     @Id
@@ -22,4 +28,17 @@ public class Funding {
     @ManyToOne
     @JoinColumn(name = "funding_education_id", nullable = false, updatable = false)
     private Education fundingEducation;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Funding funding = (Funding) o;
+        return fundingId != null && Objects.equals(fundingId, funding.fundingId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

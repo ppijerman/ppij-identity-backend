@@ -1,13 +1,19 @@
 package org.ppijerman.ppijidentitybackend.server.dto;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Builder
 @Table(name = "\"Institution\"", schema = "CENSUS")
 public class Institution {
     @Id
@@ -37,5 +43,19 @@ public class Institution {
     private City institutionCity;
 
     @OneToMany(mappedBy = "educationInstitution")
+    @ToString.Exclude
     private List<Education> educations;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Institution that = (Institution) o;
+        return institutionId != null && Objects.equals(institutionId, that.institutionId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

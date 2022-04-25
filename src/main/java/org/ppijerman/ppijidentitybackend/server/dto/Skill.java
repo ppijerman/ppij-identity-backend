@@ -1,12 +1,18 @@
 package org.ppijerman.ppijidentitybackend.server.dto;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
+@Builder
 @Table(name = "\"Skill\"", schema = "CENSUS")
 public class Skill {
     @Id
@@ -26,4 +32,17 @@ public class Skill {
     @ManyToOne
     @JoinColumn(name = "skill_category_id", columnDefinition = "UUID", nullable = false)
     private Category skillCategory;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Skill skill = (Skill) o;
+        return skillId != null && Objects.equals(skillId, skill.skillId);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
