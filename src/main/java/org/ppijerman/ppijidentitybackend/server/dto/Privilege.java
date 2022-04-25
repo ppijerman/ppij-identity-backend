@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "\"Privilege\"", schema = "CENSUS")
 public class Privilege {
     @Id
-    @Column(name = "privilege_id", columnDefinition = "uuid default uuid_generate_v4()")
+    @Column(name = "privilege_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID privilegeId;
 
     @Column(name = "privilege_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)

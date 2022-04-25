@@ -5,6 +5,7 @@ import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,11 +13,8 @@ import java.util.UUID;
 @Data
 @Table(name = "\"Person\"", schema = "CENSUS")
 public class Person {
-
-    private static final String SYM_PASSWORD = System.getenv("SYM_PASSWORD");
-
     @Id
-    @Column(name = "person_id", columnDefinition = "uuid default uuid_generate_v4()")
+    @Column(name = "person_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID personId;
 
     @Column(name = "person_name", columnDefinition = "BYTEA", nullable = false)
@@ -32,7 +30,7 @@ public class Person {
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
     @Temporal(TemporalType.DATE)
-    private Calendar personBirthDate;
+    private Date personBirthDate;
 
     @Column(name = "person_birth_place", columnDefinition = "BYTEA", nullable = false)
     @ColumnTransformer(
@@ -61,6 +59,10 @@ public class Person {
     )
     private String personPassword;
 
+    @Column(name = "person_signup_timestamp", columnDefinition = "TIMESTAMP DEFAULT NOW()", nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Calendar personSignupTimestamp;
+
     @Column(name = "person_uni_email", columnDefinition = "BYTEA")
     @ColumnTransformer(
             read = "CAST(pgp_sym_decrypt(person_uni_email, current_setting('sym_password')) AS TEXT)",
@@ -78,10 +80,10 @@ public class Person {
 
     @Column(name = "person_last_student_status_verified", columnDefinition = "BYTEA", nullable = false)
     @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_last_student_status_verified, current_setting('sym_password')) AS DATE)",
+            read = "CAST(pgp_sym_decrypt(person_last_student_status_verified, current_setting('sym_password')) AS TIMESTAMP WITH TIME ZONE)",
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Calendar personLastVerified;
 
     @Column(name = "person_zipcode", columnDefinition = "BYTEA", nullable = false)
@@ -105,12 +107,12 @@ public class Person {
     )
     private String personStreetNumber;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "person_branch_id", columnDefinition = "uuid")
     private Branch personBranch;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "person_city_id", columnDefinition = "uuid")
+    @ManyToOne
+    @JoinColumn(name = "person_city_id", columnDefinition = "UUID")
     private City personCity;
 
     @ManyToMany
@@ -121,4 +123,16 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> personRole;
+
+    @OneToMany(mappedBy = "educationPerson", orphanRemoval = true)
+    private List<Education> educations;
+
+    @OneToMany(mappedBy = "applicationOwner", orphanRemoval = true)
+    private List<Application> applications;
+
+    @OneToMany(mappedBy = "experiencePerson", orphanRemoval = true)
+    private List<Experience> experiences;
+
+    @OneToMany(mappedBy = "skillPerson", orphanRemoval = true)
+    private List<Skill> skills;
 }

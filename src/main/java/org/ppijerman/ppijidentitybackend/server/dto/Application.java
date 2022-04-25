@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name = "\"Application\"", schema = "CENSUS")
 public class Application {
     @Id
-    @Column(name = "application_id", columnDefinition = "uuid default uuid_generate_v4()")
+    @Column(name = "application_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID applicationId;
 
     @Column(name = "application_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
@@ -33,7 +33,7 @@ public class Application {
     private Calendar creationDate;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "application_owner_id", nullable = false)
+    @JoinColumn(name = "application_owner_id", nullable = false, updatable = false)
     private Person applicationOwner;
 
     @ManyToMany

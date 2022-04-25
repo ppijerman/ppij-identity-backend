@@ -11,7 +11,7 @@ import java.util.UUID;
 @Table(name = "\"Role\"", schema = "CENSUS")
 public class Role {
     @Id
-    @Column(name = "role_id", columnDefinition = "uuid default uuid_generate_v4()")
+    @Column(name = "role_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID roleId;
 
     @Column(name = "role_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)

@@ -3,6 +3,7 @@ package org.ppijerman.ppijidentitybackend.server.dto;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -10,7 +11,7 @@ import java.util.UUID;
 @Table(name = "\"Institution\"", schema = "CENSUS")
 public class Institution {
     @Id
-    @Column(name = "institution_id", columnDefinition = "uuid default uuid_generate_v4()")
+    @Column(name = "institution_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID institutionId;
 
     @Column(name = "institution_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
@@ -34,4 +35,7 @@ public class Institution {
     @ManyToOne(optional = false)
     @JoinColumn(name = "institution_city_id", nullable = false)
     private City institutionCity;
+
+    @OneToMany(mappedBy = "educationInstitution")
+    private List<Education> educations;
 }

@@ -12,35 +12,33 @@ import java.util.UUID;
 @Table(name = "\"Education\"", schema = "CENSUS")
 public class Education {
     @Id
-    @Column(name = "education_id", columnDefinition = "uuid default uuid_generate_v4()")
+    @Column(name = "education_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID educationId;
 
-    @Column(name = "education_start_date", nullable = false)
+    @Column(name = "education_start_date", columnDefinition = "DATE", nullable = false)
     @Temporal(TemporalType.DATE)
     private Calendar educationStartDate;
 
-    @Column(name = "education_end_date")
+    @Column(name = "education_end_date", columnDefinition = "DATE")
     @Temporal(TemporalType.DATE)
     private Calendar educationEndDate;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "education_institution_id", nullable = false)
+    @JoinColumn(name = "education_institution_id", columnDefinition = "UUID", nullable = false)
     private Institution educationInstitution;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "education_person_id", nullable = false)
+    @JoinColumn(name = "education_person_id", columnDefinition = "UUID", nullable = false, updatable = false)
     private Person educationPerson;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "education_degree_id", nullable = false)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "education_degree_id", columnDefinition = "UUID", nullable = false)
     private Degree educationDegree;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "education_major_id", nullable = false)
+    @JoinColumn(name = "education_major_id", columnDefinition = "UUID", nullable = false)
     private Major educationMajor;
 
-    @OneToOne(optional = false)
-    @JoinColumn(name = "education_funding_id", nullable = false)
-    private Funding educationFunding;
-
+    @OneToMany(mappedBy = "fundingEducation", orphanRemoval = true)
+    private List<Funding> educationFundings;
 }

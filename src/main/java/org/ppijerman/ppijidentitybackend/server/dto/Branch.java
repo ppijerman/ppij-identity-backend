@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -11,7 +12,7 @@ import java.util.UUID;
 @Table(name = "\"Branch\"", schema = "CENSUS")
 public class Branch {
     @Id
-    @Column(name = "branch_id", columnDefinition = "uuid default uuid_generate_v4()")
+    @Column(name = "branch_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID branchId;
 
     @Column(name = "branch_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
@@ -39,4 +40,6 @@ public class Branch {
     @Column(name = "branch_twitter", columnDefinition = "VARCHAR(50)", length = 50)
     private String branchTwitter;
 
+    @OneToMany(mappedBy = "personBranch")
+    private List<Person> members;
 }

@@ -3,7 +3,7 @@ package org.ppijerman.ppijidentitybackend.server.dto;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -11,7 +11,7 @@ import java.util.UUID;
 @Table(name = "\"Experience\"", schema = "CENSUS")
 public class Experience {
     @Id
-    @Column(name = "experience_id", columnDefinition = "uuid default uuid_generate_v4()")
+    @Column(name = "experience_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID experienceId;
 
     @Column(name = "experience_name", columnDefinition = "VARCHAR(255)", length = 255, nullable = false)
@@ -22,14 +22,14 @@ public class Experience {
 
     @Column(name = "experience_start_date", nullable = false)
     @Temporal(TemporalType.DATE)
-    private Calendar experienceStartDate;
+    private Date experienceStartDate;
 
     @Column(name = "experience_end_date")
     @Temporal(TemporalType.DATE)
-    private Calendar experienceEndDate;
+    private Date experienceEndDate;
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "experience_person_id", nullable = false)
+    @JoinColumn(name = "experience_person_id", nullable = false, updatable = false)
     private Person experiencePerson;
 
     @ManyToOne
@@ -39,5 +39,4 @@ public class Experience {
     @ManyToOne
     @JoinColumn(name = "experience_type_id", nullable = false)
     private ExperienceType experienceType;
-
 }
