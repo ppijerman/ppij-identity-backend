@@ -1,13 +1,14 @@
 package org.ppijerman.ppijidentitybackend.server.dto;
 
 import lombok.Data;
+import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "Branch", schema = "CENSUS")
+@Table(name = "\"Branch\"", schema = "CENSUS")
 public class Branch {
     @Id
     @Column(name = "branch_id", columnDefinition = "uuid default uuid_generate_v4()")
@@ -20,7 +21,7 @@ public class Branch {
     private String branchEmail;
 
     @OneToOne(optional = false)
-    @JoinColumn(name = "branch_leader_id", nullable = false)
+    @JoinColumn(name = "branch_leader_id", columnDefinition = "BYTEA", nullable = false)
     private Person branchLeader;
 
     @Column(name = "branch_phone", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)

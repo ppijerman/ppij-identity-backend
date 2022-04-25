@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "Degree", schema = "CENSUS")
+@Table(name = "\"Degree\"", schema = "CENSUS")
 public class Degree {
     // TODO: Generated Value or use setter?
     @Id

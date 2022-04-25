@@ -8,7 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "Role", schema = "CENSUS")
+@Table(name = "\"Role\"", schema = "CENSUS")
 public class Role {
     @Id
     @Column(name = "role_id", columnDefinition = "uuid default uuid_generate_v4()")
@@ -19,7 +19,8 @@ public class Role {
 
     @ManyToMany
     @JoinTable(
-            name = "Privilege_Role_Map",
+            name = "\"Privilege_Role_Map\"",
+            schema = "CENSUS",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "privilege_id")
     )

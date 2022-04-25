@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "Skill", schema = "CENSUS")
+@Table(name = "\"Skill\"", schema = "CENSUS")
 public class Skill {
     @Id
     @Column(name = "skill_id", columnDefinition = "uuid default uuid_generate_v4()")
