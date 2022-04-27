@@ -3,10 +3,7 @@ package org.ppijerman.ppijidentitybackend.server.dto;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -14,11 +11,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Table(name = "\"Privilege\"", schema = "CENSUS")
 public class Privilege {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "privilege_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID privilegeId;
 

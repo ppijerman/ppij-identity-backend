@@ -11,7 +11,8 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Table(name = "\"Refresh_Token\"", schema = "CENSUS")
 public class RefreshToken {
@@ -19,7 +20,7 @@ public class RefreshToken {
     @Column(name = "refresh_token", columnDefinition = "VARCHAR(64)", updatable = false)
     private String refreshToken;
 
-    @Column(name = "refresh_token_expiration_time", columnDefinition = "TIMESTAMP", nullable = false, updatable = false)
+    @Column(name = "refresh_token_expiration_time", columnDefinition = "TIMESTAMP WITHOUT TIMEZONE", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar refreshTokenExpirationTime;
 

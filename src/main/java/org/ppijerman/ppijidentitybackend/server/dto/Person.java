@@ -10,12 +10,14 @@ import java.util.*;
 @Entity
 @Getter
 @Setter
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @ToString
 @Table(name = "\"Person\"", schema = "CENSUS")
 public class Person {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "person_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID personId;
 
@@ -62,7 +64,7 @@ public class Person {
     )
     private String personPassword;
 
-    @Column(name = "person_signup_timestamp", columnDefinition = "TIMESTAMP DEFAULT NOW()", nullable = false, updatable = false)
+    @Column(name = "person_signup_timestamp", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar personSignupTimestamp;
 

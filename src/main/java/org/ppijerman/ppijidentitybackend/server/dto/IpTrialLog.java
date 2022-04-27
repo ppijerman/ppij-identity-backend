@@ -6,13 +6,15 @@ import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Table(name = "\"Ip_Trial_Log\"", schema = "CENSUS_SECURITY")
 public class IpTrialLog {
@@ -27,9 +29,9 @@ public class IpTrialLog {
     @Column(name = "ip_trial_log_count", columnDefinition = "SMALLINT default 0", nullable = false)
     private short ipTrialLogCount;
 
-    @Column(name = "ip_trial_log_last_timestamp", columnDefinition = "TIMESTAMP WITH TIMEZONE", nullable = false)
+    @Column(name = "ip_trial_log_last_timestamp", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp ipTrialLogLastTimestamp;
+    private Date ipTrialLogLastTimestamp;
 
     @Override
     public boolean equals(Object o) {

@@ -11,11 +11,13 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Table(name = "\"Funding\"", schema = "CENSUS")
 public class Funding {
     @Id
+    @GeneratedValue(strategy = GenerationType.TABLE)
     @Column(name = "funding_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID fundingId;
 
