@@ -1,6 +1,6 @@
-package org.ppijerman.ppijidentitybackend.server.service.repository;
+package org.ppijerman.ppijidentitybackend.server.data.repository;
 
-import org.ppijerman.ppijidentitybackend.server.dto.Person;
+import org.ppijerman.ppijidentitybackend.server.data.dto.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

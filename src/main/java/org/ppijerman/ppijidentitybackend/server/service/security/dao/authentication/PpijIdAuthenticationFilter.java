@@ -25,11 +25,10 @@ public class PpijIdAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Autowired
     public PpijIdAuthenticationFilter(
             IpRateLimiterService ipRateLimiterService,
-            List<PpijAuthenticationProvider> ppijAuthenticationProviderList
+            List<AuthenticationProvider> ppijAuthenticationProviderList
     ) {
         this.ipRateLimiterService = ipRateLimiterService;
-        final List<AuthenticationProvider> authenticationProviders = ppijAuthenticationProviderList.stream().map(provider -> (AuthenticationProvider) provider).collect(Collectors.toUnmodifiableList());
-        this.setAuthenticationManager(new ProviderManager(authenticationProviders));
+        this.setAuthenticationManager(new ProviderManager(ppijAuthenticationProviderList));
     }
 
     @Override

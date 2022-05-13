@@ -1,4 +1,4 @@
-package org.ppijerman.ppijidentitybackend.server.dto;
+package org.ppijerman.ppijidentitybackend.server.data.dto;
 
 import lombok.*;
 import org.hibernate.Hibernate;

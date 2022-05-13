@@ -1,8 +1,8 @@
 package org.ppijerman.ppijidentitybackend.server.service.security.dao.authentication;
 
 import com.google.common.net.InetAddresses;
-import org.ppijerman.ppijidentitybackend.server.dto.IpTrialLog;
-import org.ppijerman.ppijidentitybackend.server.repository.IpRepository;
+import org.ppijerman.ppijidentitybackend.server.data.dto.IpTrialLog;
+import org.ppijerman.ppijidentitybackend.server.data.repository.IpRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

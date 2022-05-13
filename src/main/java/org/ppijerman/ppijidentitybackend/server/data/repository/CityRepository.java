@@ -1,6 +1,6 @@
-package org.ppijerman.ppijidentitybackend.server.service.repository;
+package org.ppijerman.ppijidentitybackend.server.data.repository;
 
-import org.ppijerman.ppijidentitybackend.server.dto.City;
+import org.ppijerman.ppijidentitybackend.server.data.dto.City;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
