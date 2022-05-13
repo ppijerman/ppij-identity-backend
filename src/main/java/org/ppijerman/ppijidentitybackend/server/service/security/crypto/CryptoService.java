@@ -20,6 +20,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.UUID;
 
@@ -138,6 +139,10 @@ public class CryptoService implements PasswordEncoder {
         return this.encryptString(calendar.toInstant().toString());
     }
 
+    public byte[] encryptDate(final Date date) {
+        return this.encryptString(date.toInstant().toString());
+    }
+
     public byte[] decryptToBytes(final byte[] cipherBytes) {
         return bytesEncryptor.decrypt(cipherBytes);
     }
@@ -158,6 +163,10 @@ public class CryptoService implements PasswordEncoder {
         final Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(Instant.parse(this.decryptToString(cipherBytes)).toEpochMilli());
         return calendar;
+    }
+
+    public Date decryptToDate(final byte[] cipherBytes) {
+        return new Date(Instant.parse(this.decryptToString(cipherBytes)).toEpochMilli());
     }
 
     public byte[] sign(final int signatureType, final byte[] plainBytes, final String signerId) {

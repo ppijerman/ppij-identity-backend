@@ -1,11 +1,10 @@
-package org.ppijerman.ppijidentitybackend.server.dto;
+package org.ppijerman.ppijidentitybackend.server.data.dto;
 
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 

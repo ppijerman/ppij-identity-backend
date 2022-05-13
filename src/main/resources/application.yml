@@ -25,3 +25,6 @@ ppij-id:
     lockoff:
       limit: 5
       cooldown: 300
+    encryption:
+      pgp:
+        secret-key: $PGP_SECRET_KEY

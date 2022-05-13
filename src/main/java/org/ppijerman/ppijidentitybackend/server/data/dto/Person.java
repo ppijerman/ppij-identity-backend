@@ -1,8 +1,11 @@
-package org.ppijerman.ppijidentitybackend.server.dto;
+package org.ppijerman.ppijidentitybackend.server.data.dto;
 
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnTransformer;
+import org.ppijerman.ppijidentitybackend.server.service.security.crypto.database.CalendarEncryptor;
+import org.ppijerman.ppijidentitybackend.server.service.security.crypto.database.DateEncryptor;
+import org.ppijerman.ppijidentitybackend.server.service.security.crypto.database.StringEncryptor;
 
 import javax.persistence.*;
 import java.util.*;
@@ -21,43 +24,28 @@ public class Person {
     private UUID personId;
 
     @Column(name = "person_name", columnDefinition = "BYTEA", nullable = false)
-    @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_name, current_setting('sym_password')) AS TEXT)",
-            write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
-    )
+    @Convert(converter = StringEncryptor.class)
     @Setter
     private String personName;
 
     @Column(name = "person_birth_date", columnDefinition = "BYTEA", nullable = false)
-    @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_birth_date, current_setting('sym_password')) AS DATE)",
-            write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
-    )
+    @Convert(converter = DateEncryptor.class)
     @Temporal(TemporalType.DATE)
     @Setter
     private Date personBirthDate;
 
     @Column(name = "person_birth_place", columnDefinition = "BYTEA", nullable = false)
-    @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_birth_place, current_setting('sym_password')) AS TEXT)",
-            write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
-    )
+    @Convert(converter = StringEncryptor.class)
     @Setter
     private String personBirthPlace;
 
     @Column(name = "person_phone", columnDefinition = "BYTEA", nullable = false)
-    @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_phone, current_setting('sym_password')) AS TEXT)",
-            write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
-    )
+    @Convert(converter = StringEncryptor.class)
     @Setter
     private String personPhone;
 
     @Column(name = "person_email", columnDefinition = "BYTEA", nullable = false)
-    @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_email, current_setting('sym_password')) AS TEXT)",
-            write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
-    )
+    @Convert(converter = StringEncryptor.class)
     @Setter
     private String personEmail;
 
@@ -73,10 +61,7 @@ public class Person {
     private Calendar personSignupTimestamp;
 
     @Column(name = "person_uni_email", columnDefinition = "BYTEA")
-    @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_uni_email, current_setting('sym_password')) AS TEXT)",
-            write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
-    )
+    @Convert(converter = StringEncryptor.class)
     @Setter
     private String personUniEmail;
 
@@ -91,35 +76,23 @@ public class Person {
     private boolean personIsEmailVerified;
 
     @Column(name = "person_last_student_status_verified", columnDefinition = "BYTEA")
-    @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_last_student_status_verified, current_setting('sym_password')) AS TIMESTAMP WITH TIME ZONE)",
-            write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
-    )
+    @Convert(converter = CalendarEncryptor.class)
     @Temporal(TemporalType.TIMESTAMP)
     @Setter
     private Calendar personLastVerified;
 
     @Column(name = "person_zipcode", columnDefinition = "BYTEA", nullable = false)
-    @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_zipcode, current_setting('sym_password')) AS TEXT)",
-            write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
-    )
+    @Convert(converter = StringEncryptor.class)
     @Setter
     private String personZipcode;
 
     @Column(name = "person_street", columnDefinition = "BYTEA", nullable = false)
-    @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_street, current_setting('sym_password')) AS TEXT)",
-            write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
-    )
+    @Convert(converter = StringEncryptor.class)
     @Setter
     private String personStreet;
 
     @Column(name = "person_street_number", columnDefinition = "BYTEA", nullable = false)
-    @ColumnTransformer(
-            read = "CAST(pgp_sym_decrypt(person_street_number, current_setting('sym_password')) AS TEXT)",
-            write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
-    )
+    @Convert(converter = StringEncryptor.class)
     @Setter
     private String personStreetNumber;
 

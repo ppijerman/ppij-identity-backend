@@ -18,7 +18,7 @@ public class PpijIdApiAuthenticationFilter extends AbstractAuthenticationProcess
             RequestMatcher requiresAuthenticationRequestMatcher
     ) {
         super(requiresAuthenticationRequestMatcher);
-        this.setAuthenticationManager(new ProviderManager());
+        // this.setAuthenticationManager(new ProviderManager());
     }
 
     @Override

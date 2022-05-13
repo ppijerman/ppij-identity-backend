@@ -6,7 +6,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
@@ -61,6 +63,12 @@ public class CryptoServiceTest {
     public void testEncryptAndDecryptInt() {
         int val = 69;
         assertEquals(val, cryptoService.decryptToInt(cryptoService.encryptInt(val)));
+    }
+
+    @Test
+    public void testEncryptAndDecryptDate() {
+        Date date = Date.from(Instant.now());
+        assertEquals(date, cryptoService.decryptToDate(cryptoService.encryptDate(date)));
     }
 
     @Test
