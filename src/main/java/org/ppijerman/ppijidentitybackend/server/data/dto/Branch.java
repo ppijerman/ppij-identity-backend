@@ -2,6 +2,7 @@ package org.ppijerman.ppijidentitybackend.server.data.dto;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.ppijerman.ppijidentitybackend.server.service.security.crypto.database.UuidEncryptor;
 
 import javax.persistence.*;
 import java.util.List;
