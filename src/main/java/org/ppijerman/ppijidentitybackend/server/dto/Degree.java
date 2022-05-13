@@ -18,7 +18,7 @@ import java.util.UUID;
 @Table(name = "\"Degree\"", schema = "CENSUS")
 public class Degree {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue
     @Column(name = "degree_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID degreeId;
 

@@ -17,7 +17,7 @@ import java.util.UUID;
 @Table(name = "\"Privilege\"", schema = "CENSUS")
 public class Privilege {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue
     @Column(name = "privilege_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID privilegeId;
 

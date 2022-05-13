@@ -9,7 +9,6 @@ import java.util.*;
 
 @Entity
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -17,7 +16,7 @@ import java.util.*;
 @Table(name = "\"Person\"", schema = "CENSUS")
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue
     @Column(name = "person_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID personId;
 
@@ -26,6 +25,7 @@ public class Person {
             read = "CAST(pgp_sym_decrypt(person_name, current_setting('sym_password')) AS TEXT)",
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
+    @Setter
     private String personName;
 
     @Column(name = "person_birth_date", columnDefinition = "BYTEA", nullable = false)
@@ -34,6 +34,7 @@ public class Person {
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
     @Temporal(TemporalType.DATE)
+    @Setter
     private Date personBirthDate;
 
     @Column(name = "person_birth_place", columnDefinition = "BYTEA", nullable = false)
@@ -41,6 +42,7 @@ public class Person {
             read = "CAST(pgp_sym_decrypt(person_birth_place, current_setting('sym_password')) AS TEXT)",
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
+    @Setter
     private String personBirthPlace;
 
     @Column(name = "person_phone", columnDefinition = "BYTEA", nullable = false)
@@ -56,15 +58,17 @@ public class Person {
             read = "CAST(pgp_sym_decrypt(person_email, current_setting('sym_password')) AS TEXT)",
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
+    @Setter
     private String personEmail;
 
     @Column(name = "person_password", columnDefinition = "TEXT", nullable = false)
     @ColumnTransformer(
             write = "crypt(?, gen_salt('bf'))"
     )
+    @Setter
     private String personPassword;
 
-    @Column(name = "person_signup_timestamp", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()", nullable = false, updatable = false)
+    @Column(name = "person_signup_timestamp", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()", nullable = false, updatable = false, insertable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar personSignupTimestamp;
 
@@ -78,18 +82,21 @@ public class Person {
 
     // We don't encrypt this to prevent dictionary attack
     @Column(name = "person_status", columnDefinition = "VARCHAR(30)", length = 30)
+    @Setter
     private String personStatus;
 
     // We don't encrypt this to prevent dictionary attack
     @Column(name = "person_is_email_verified", columnDefinition = "boolean", nullable = false)
+    @Setter
     private boolean personIsEmailVerified;
 
-    @Column(name = "person_last_student_status_verified", columnDefinition = "BYTEA", nullable = false)
+    @Column(name = "person_last_student_status_verified", columnDefinition = "BYTEA")
     @ColumnTransformer(
             read = "CAST(pgp_sym_decrypt(person_last_student_status_verified, current_setting('sym_password')) AS TIMESTAMP WITH TIME ZONE)",
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
     @Temporal(TemporalType.TIMESTAMP)
+    @Setter
     private Calendar personLastVerified;
 
     @Column(name = "person_zipcode", columnDefinition = "BYTEA", nullable = false)
@@ -97,6 +104,7 @@ public class Person {
             read = "CAST(pgp_sym_decrypt(person_zipcode, current_setting('sym_password')) AS TEXT)",
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
+    @Setter
     private String personZipcode;
 
     @Column(name = "person_street", columnDefinition = "BYTEA", nullable = false)
@@ -104,6 +112,7 @@ public class Person {
             read = "CAST(pgp_sym_decrypt(person_street, current_setting('sym_password')) AS TEXT)",
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
+    @Setter
     private String personStreet;
 
     @Column(name = "person_street_number", columnDefinition = "BYTEA", nullable = false)
@@ -111,6 +120,7 @@ public class Person {
             read = "CAST(pgp_sym_decrypt(person_street_number, current_setting('sym_password')) AS TEXT)",
             write = "pgp_sym_encrypt(CAST(? AS TEXT), current_setting('sym_password'), 'cipher-algo=aes256')"
     )
+    @Setter
     private String personStreetNumber;
 
     @ManyToOne
@@ -129,22 +139,27 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @ToString.Exclude
+    @Setter
     private List<Role> personRole;
 
     @OneToMany(mappedBy = "educationPerson", orphanRemoval = true)
     @ToString.Exclude
+    @Setter
     private List<Education> educations;
 
     @OneToMany(mappedBy = "applicationOwner", orphanRemoval = true)
     @ToString.Exclude
+    @Setter
     private List<Application> applications;
 
     @OneToMany(mappedBy = "experiencePerson", orphanRemoval = true)
     @ToString.Exclude
+    @Setter
     private List<Experience> experiences;
 
     @OneToMany(mappedBy = "skillPerson", orphanRemoval = true)
     @ToString.Exclude
+    @Setter
     private List<Skill> skills;
 
     @Override

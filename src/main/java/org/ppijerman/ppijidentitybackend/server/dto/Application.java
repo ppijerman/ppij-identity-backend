@@ -20,7 +20,7 @@ import java.util.UUID;
 @Table(name = "\"Application\"", schema = "CENSUS")
 public class Application {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue
     @Column(name = "application_id", columnDefinition = "UUID default uuid_generate_v4()", updatable = false)
     private UUID applicationId;
 
