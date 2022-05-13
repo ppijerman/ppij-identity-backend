@@ -27,4 +27,4 @@ ppij-id:
       cooldown: 300
     encryption:
       pgp:
-        secret-key: PGP_SECRET_KEY
+        secret-key: $PGP_SECRET_KEY
