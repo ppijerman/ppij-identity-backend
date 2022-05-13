@@ -29,7 +29,7 @@ public class IpTrialLog {
     @Column(name = "ip_trial_log_count", columnDefinition = "SMALLINT default 0", nullable = false)
     private short ipTrialLogCount;
 
-    @Column(name = "ip_trial_log_last_timestamp", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()", nullable = false)
+    @Column(name = "ip_trial_log_last_timestamp", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ipTrialLogLastTimestamp;
 

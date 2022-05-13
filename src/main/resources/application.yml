@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   session:
     jdbc:
-      initialize-schema: always
+      initialize-schema: never
   sql:
     init:
       encoding: UTF-8
@@ -19,3 +19,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+ppij-id:
+  security:
+    lockoff:
+      limit: 5
+      cooldown: 300
