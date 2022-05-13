@@ -52,8 +52,8 @@ public class IpRateLimiterService {
             this.addCooldown(ip);
         }
 
-        IpTrialLog ipTrialLog = this.ipRepository.findById(ip).orElse(new IpTrialLog(ip, 1));
-        ipTrialLog.setTrialCount(ipTrialLog.getTrialCount() + 1);
+        IpTrialLog ipTrialLog = this.ipRepository.findById(ip).orElse(IpTrialLog.builder().ipTrialLogAddress(ip).ipTrialLogCount((short) 1).build());
+        ipTrialLog.setIpTrialLogCount((short) (ipTrialLog.getIpTrialLogCount() + 1));
         this.ipRepository.save(ipTrialLog);
         return true;
     }
@@ -97,6 +97,6 @@ public class IpRateLimiterService {
     }
 
     private int getTrialErrorCountForIp(String ip) {
-        return this.ipRepository.findById(ip).orElse(new IpTrialLog( ip, 0)).getTrialCount();
+        return this.ipRepository.findById(ip).orElse(IpTrialLog.builder().ipTrialLogAddress(ip).ipTrialLogCount((short) 1).build()).getIpTrialLogCount();
     }
 }
