@@ -42,6 +42,12 @@ public class CryptoServiceTest {
     }
 
     @Test
+    public void testPasswordEncoderHashing() {
+        final String plainText = "Text";
+        assertTrue(cryptoService.matches(plainText, cryptoService.hash(plainText)));
+    }
+
+    @Test
     public void testEncryptAndDecryptSerializable() {
         String plainText = "This is serializable";
         assertEquals(plainText, cryptoService.decrypt(cryptoService.encrypt(plainText)));
