@@ -39,12 +39,12 @@ public class Person {
     @Setter
     private String personBirthPlace;
 
-    @Column(name = "person_phone", columnDefinition = "BYTEA", nullable = false)
+    @Column(name = "person_phone", columnDefinition = "BYTEA", nullable = false, unique = true)
     @Convert(converter = StringEncryptor.class)
     @Setter
     private String personPhone;
 
-    @Column(name = "person_email", columnDefinition = "BYTEA", nullable = false)
+    @Column(name = "person_email", columnDefinition = "BYTEA", nullable = false, unique = true)
     @Convert(converter = StringEncryptor.class)
     @Setter
     private String personEmail;
@@ -57,7 +57,7 @@ public class Person {
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar personSignupTimestamp;
 
-    @Column(name = "person_uni_email", columnDefinition = "BYTEA")
+    @Column(name = "person_uni_email", columnDefinition = "BYTEA", unique = true)
     @Convert(converter = StringEncryptor.class)
     @Setter
     private String personUniEmail;
@@ -110,7 +110,7 @@ public class Person {
     )
     @ToString.Exclude
     @Setter
-    private List<Role> personRole;
+    private List<Role> roles;
 
     @OneToMany(mappedBy = "educationPerson", orphanRemoval = true)
     @ToString.Exclude
