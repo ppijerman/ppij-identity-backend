@@ -110,7 +110,7 @@ public class Person {
     )
     @ToString.Exclude
     @Setter
-    private List<Role> personRole;
+    private List<Role> roles;
 
     @OneToMany(mappedBy = "educationPerson", orphanRemoval = true)
     @ToString.Exclude
