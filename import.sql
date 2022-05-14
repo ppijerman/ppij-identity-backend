@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS census."Person"
     person_password TEXT NOT NULL,
     person_uni_email BYTEA, -- VARCHAR(100)
     person_status VARCHAR(30),
+    person_signup_timestamp TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL,
     person_is_email_verified BOOLEAN NOT NULL DEFAULT false,
     person_last_student_status_verified BYTEA, -- DATE
     person_zipcode BYTEA NOT NULL, -- VARCHAR(10)
@@ -174,7 +175,7 @@ CREATE TABLE IF NOT EXISTS census."Access_Token"
 (
     access_token VARCHAR(64) NOT NULL,
     access_token_application_id UUID NOT NULL,
-    access_token_expiration_time time without time zone NOT NULL,
+    access_token_expiration_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     PRIMARY KEY (access_token)
 );
 
@@ -182,7 +183,7 @@ CREATE TABLE IF NOT EXISTS census."Refresh_Token"
 (
     refresh_token VARCHAR(64) NOT NULL,
     refresh_token_application_id UUID NOT NULL,
-    refresh_token_expiration_time time without time zone NOT NULL,
+    refresh_token_expiration_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     PRIMARY KEY (refresh_token)
 );
 
