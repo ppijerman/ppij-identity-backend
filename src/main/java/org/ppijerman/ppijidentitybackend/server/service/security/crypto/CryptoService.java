@@ -72,7 +72,7 @@ public class CryptoService implements PasswordEncoder {
 
     @Override
     public boolean matches(final CharSequence rawPassword, String encodedPassword) {
-        return this.encode(rawPassword).equals(encodedPassword);
+        return this.checkHash(rawPassword.toString(), encodedPassword);
     }
 
     public String hash(final String plainText) {
