@@ -42,12 +42,15 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
                         "/about",
                         "/register"
                 ).permitAll()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
                     .loginPage("/login")
-                    .permitAll()
+                    .usernameParameter("email")
                     .successHandler(this.ppijIdAuthenticationSuccessHandler)
                     .failureHandler(this.ppijIdAuthenticationFailureHandler)
+                    .permitAll()
                 .and()
                 .logout()
                     .logoutUrl("/logout")
