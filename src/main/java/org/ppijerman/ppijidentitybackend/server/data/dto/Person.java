@@ -50,9 +50,6 @@ public class Person {
     private String personEmail;
 
     @Column(name = "person_password", columnDefinition = "TEXT", nullable = false)
-    @ColumnTransformer(
-            write = "crypt(?, gen_salt('bf'))"
-    )
     @Setter
     private String personPassword;
 
@@ -134,6 +131,22 @@ public class Person {
     @ToString.Exclude
     @Setter
     private List<Skill> skills;
+
+    public boolean isLocked() {
+        return "LOCKED".equals(personStatus);
+    }
+
+    public boolean isExpired() {
+        return "EXPIRED".equals(personStatus);
+    }
+
+    public boolean isCredentialExpired() {
+        return "CREDENTIAL_EXPIRED".equals(personStatus);
+    }
+
+    public boolean isActive() {
+        return personIsEmailVerified && "ACTIVE".equals(personStatus);
+    }
 
     @Override
     public boolean equals(Object o) {

@@ -1,5 +1,7 @@
 package org.ppijerman.ppijidentitybackend.server.service.security.dao.authentication;
 
+import org.ppijerman.ppijidentitybackend.server.data.dto.Person;
+import org.ppijerman.ppijidentitybackend.server.data.repository.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,26 +16,32 @@ public class PpijIdUserDetailsService implements UserDetailsService, UserDetails
 
     private final Logger log = LoggerFactory.getLogger(PpijIdUserDetailsService.class);
 
-    // private final UserRepository userRepository;
+    private PersonRepository personRepository;
 
     @Autowired
     public PpijIdUserDetailsService(
-            // UserRepository userRepository
+            PersonRepository personRepository
     ) {
-        // this.userRepository = userRepository;
+        this.personRepository = personRepository;
     }
 
-    // TODO after repository done
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         log.trace("Loading user with email {} within user details service.", email);
-        return null;
+        return new PpijUserDetails(personRepository.findByPersonEmail(email));
     }
 
-    // TODO after repository done
     @Override
     public UserDetails updatePassword(UserDetails user, String newPassword) {
         log.trace("Updating user password with email {}.", user.getUsername());
-        return null;
+
+        if (!(user instanceof PpijUserDetails)) {
+            throw new IllegalArgumentException("User is not instance of PPIJ User Details");
+        }
+
+        PpijUserDetails ppijUserDetails = (PpijUserDetails) user;
+        Person person = ppijUserDetails.getPerson();
+        person.setPersonPassword(newPassword);
+        return new PpijUserDetails(person);
     }
 }
