@@ -6,7 +6,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   session:
     jdbc:
-      initialize-schema: never
+      initialize-schema: always
   sql:
     init:
       encoding: UTF-8
