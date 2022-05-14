@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS census."Person"
     person_city_id UUID,
     person_branch_id UUID,
     CONSTRAINT person_id PRIMARY KEY (person_id)
-);
+    );
 
 ALTER TABLE IF EXISTS census."Person"
     ENABLE ROW LEVEL SECURITY;
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS census."City"
     city_id uuid NOT NULL DEFAULT uuid_generate_v4(),
     city_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (city_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Branch"
 (
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS census."Branch"
     branch_instagram VARCHAR(50),
     branch_twitter VARCHAR(50),
     PRIMARY KEY (branch_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Education"
 (
@@ -62,21 +62,21 @@ CREATE TABLE IF NOT EXISTS census."Education"
     education_major_id UUID NOT NULL,
     education_institution_id UUID NOT NULL,
     PRIMARY KEY (education_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Major"
 (
     major_id UUID NOT NULL DEFAULT uuid_generate_v4(),
     major_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (major_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Degree"
 (
     degree_id uuid NOT NULL DEFAULT uuid_generate_v4(),
     degree_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (degree_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Institution"
 (
@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS census."Institution"
     institution_street_number VARCHAR(5),
     institution_city_id UUID,
     PRIMARY KEY (institution_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Skill"
 (
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS census."Skill"
     skill_is_available BOOLEAN NOT NULL,
     skill_category_id UUID NOT NULL,
     PRIMARY KEY (skill_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Experience"
 (
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS census."Experience"
     experience_start_date DATE NOT NULL,
     experience_end_date DATE,
     PRIMARY KEY (experience_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Application"
 (
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS census."Application"
     application_description character varying(255) NOT NULL,
     application_creation_date DATE NOT NULL,
     PRIMARY KEY (application_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Role_Person_Map"
 (
@@ -136,14 +136,14 @@ CREATE TABLE IF NOT EXISTS census."Category"
     category_id uuid NOT NULL,
     category_name character varying(50) NOT NULL,
     PRIMARY KEY (category_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Experience_Type"
 (
     experience_type_id UUID NOT NULL DEFAULT uuid_generate_v4(),
     experience_type_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (experience_type_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Privilege_Application_Map"
 (
@@ -156,7 +156,7 @@ CREATE TABLE IF NOT EXISTS census."Role"
     role_id UUID NOT NULL DEFAULT uuid_generate_v4(),
     role_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (role_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Privilege_Role_Map"
 (
@@ -169,7 +169,7 @@ CREATE TABLE IF NOT EXISTS census."Privilege"
     privilege_id UUID NOT NULL DEFAULT uuid_generate_v4(),
     privilege_name VARCHAR(50) NOT NULL,
     PRIMARY KEY (privilege_id)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Access_Token"
 (
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS census."Access_Token"
     access_token_application_id UUID NOT NULL,
     access_token_expiration_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     PRIMARY KEY (access_token)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Refresh_Token"
 (
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS census."Refresh_Token"
     refresh_token_application_id UUID NOT NULL,
     refresh_token_expiration_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
     PRIMARY KEY (refresh_token)
-);
+    );
 
 CREATE TABLE IF NOT EXISTS census."Funding"
 (
@@ -194,152 +194,152 @@ CREATE TABLE IF NOT EXISTS census."Funding"
     funding_institution VARCHAR(255) NOT NULL,
     funding_education_id UUID NOT NULL,
     PRIMARY KEY (funding_id)
-);
+    );
 
 ALTER TABLE IF EXISTS census."Person"
     ADD FOREIGN KEY (person_city_id)
-        REFERENCES census."City" (city_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE SET NULL;
+    REFERENCES census."City" (city_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE SET NULL;
 
 ALTER TABLE IF EXISTS census."Person"
     ADD FOREIGN KEY (person_branch_id)
-        REFERENCES census."Branch" (branch_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE SET NULL;
+    REFERENCES census."Branch" (branch_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE SET NULL;
 
 ALTER TABLE IF EXISTS census."Branch"
     ADD FOREIGN KEY (branch_leader_id)
-        REFERENCES census."Person" (person_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT; -- We cannot allow a user to be deleted if still a leader
+    REFERENCES census."Person" (person_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE RESTRICT; -- We cannot allow a user to be deleted if still a leader
 
 ALTER TABLE IF EXISTS census."Education"
     ADD FOREIGN KEY (education_person_id)
-        REFERENCES census."Person" (person_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Person" (person_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Education"
     ADD FOREIGN KEY (education_degree_id)
-        REFERENCES census."Degree" (degree_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT;
+    REFERENCES census."Degree" (degree_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE RESTRICT;
 
 ALTER TABLE IF EXISTS census."Education"
     ADD FOREIGN KEY (education_major_id)
-        REFERENCES census."Major" (major_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT;
+    REFERENCES census."Major" (major_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE RESTRICT;
 
 ALTER TABLE IF EXISTS census."Education"
     ADD FOREIGN KEY (education_institution_id)
-        REFERENCES census."Institution" (institution_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT;
+    REFERENCES census."Institution" (institution_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE RESTRICT;
 
 ALTER TABLE IF EXISTS census."Funding"
     ADD FOREIGN KEY (funding_education_id)
-        REFERENCES census."Education" (education_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Education" (education_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Education"
     ADD FOREIGN KEY (education_person_id)
-        REFERENCES census."Person" (person_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Person" (person_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Institution"
     ADD FOREIGN KEY (institution_city_id)
-        REFERENCES census."City" (city_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE SET NULL;
+    REFERENCES census."City" (city_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE SET NULL;
 
 ALTER TABLE IF EXISTS census."Skill"
     ADD FOREIGN KEY (skill_category_id)
-        REFERENCES census."Category" (category_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT;
+    REFERENCES census."Category" (category_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE RESTRICT;
 
 ALTER TABLE IF EXISTS census."Skill"
     ADD FOREIGN KEY (skill_person_id)
-        REFERENCES census."Person" (person_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Person" (person_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Experience"
     ADD FOREIGN KEY (experience_category_id)
-        REFERENCES census."Category" (category_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT;
+    REFERENCES census."Category" (category_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE RESTRICT;
 
 ALTER TABLE IF EXISTS census."Experience"
     ADD FOREIGN KEY (experience_type_id)
-        REFERENCES census."Experience_Type" (experience_type_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT;
+    REFERENCES census."Experience_Type" (experience_type_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE RESTRICT;
 
 ALTER TABLE IF EXISTS census."Experience"
     ADD FOREIGN KEY (experience_person_id)
-        REFERENCES census."Person" (person_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Person" (person_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Application"
     ADD FOREIGN KEY (application_owner_id)
-        REFERENCES census."Person" (person_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Person" (person_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Role_Person_Map"
     ADD FOREIGN KEY (role_id)
-        REFERENCES census."Role" (role_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Role" (role_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Role_Person_Map"
     ADD FOREIGN KEY (person_id)
-        REFERENCES census."Person" (person_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Person" (person_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Privilege_Application_Map"
     ADD FOREIGN KEY (privilege_id)
-        REFERENCES census."Privilege" (privilege_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Privilege" (privilege_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Privilege_Application_Map"
     ADD FOREIGN KEY (application_id)
-        REFERENCES census."Application" (application_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Application" (application_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Privilege_Role_Map"
     ADD FOREIGN KEY (privilege_id)
-        REFERENCES census."Privilege" (privilege_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Privilege" (privilege_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Privilege_Role_Map"
     ADD FOREIGN KEY (role_id)
-        REFERENCES census."Role" (role_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Role" (role_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Access_Token"
     ADD FOREIGN KEY (access_token_application_id)
-        REFERENCES census."Application" (application_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Application" (application_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 
 ALTER TABLE IF EXISTS census."Refresh_Token"
     ADD FOREIGN KEY (refresh_token_application_id)
-        REFERENCES census."Application" (application_id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE CASCADE;
+    REFERENCES census."Application" (application_id) MATCH SIMPLE
+    ON UPDATE CASCADE
+       ON DELETE CASCADE;
 
 
 -- Schema Security
@@ -350,7 +350,8 @@ CREATE TABLE IF NOT EXISTS census_security."Ip_Trial_Log"
 (
     ip_trial_log_address INET NOT NULL,
     ip_trial_log_count SMALLINT DEFAULT 0,
+    ip_trial_log_last_timestamp TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW(),
     PRIMARY KEY (ip_trial_log_address)
-);
+    );
 
 END;
