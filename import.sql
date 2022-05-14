@@ -4,7 +4,6 @@
 BEGIN;
 
 CREATE SCHEMA IF NOT EXISTS census;
-CREATE EXTENSION IF NOT EXISTS "pgcrypto"; -- We need this for encryption and hash
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp"; -- we need this for using uuid_generate_v4()
 
 CREATE TABLE IF NOT EXISTS census."Person"
@@ -60,7 +59,6 @@ CREATE TABLE IF NOT EXISTS census."Education"
     education_person_id UUID NOT NULL,
     education_degree_id UUID NOT NULL,
     education_major_id UUID NOT NULL,
-    education_funding_id UUID NOT NULL,
     education_institution_id UUID NOT NULL,
     PRIMARY KEY (education_id)
 );
@@ -193,6 +191,7 @@ CREATE TABLE IF NOT EXISTS census."Funding"
     funding_id UUID NOT NULL,
     funding_type VARCHAR(50) NOT NULL,
     funding_institution VARCHAR(255) NOT NULL,
+    funding_education_id UUID NOT NULL,
     PRIMARY KEY (funding_id)
 );
 
@@ -238,11 +237,11 @@ ALTER TABLE IF EXISTS census."Education"
         ON UPDATE CASCADE
         ON DELETE RESTRICT;
 
-ALTER TABLE IF EXISTS census."Education"
-    ADD FOREIGN KEY (education_funding_id)
-        REFERENCES census."Funding" (funding_id) MATCH SIMPLE
+ALTER TABLE IF EXISTS census."Funding"
+    ADD FOREIGN KEY (funding_education_id)
+        REFERENCES census."Education" (education_id) MATCH SIMPLE
         ON UPDATE CASCADE
-        ON DELETE RESTRICT;
+        ON DELETE CASCADE;
 
 ALTER TABLE IF EXISTS census."Education"
     ADD FOREIGN KEY (education_person_id)
@@ -310,7 +309,7 @@ ALTER TABLE IF EXISTS census."Privilege_Application_Map"
         ON UPDATE CASCADE
         ON DELETE CASCADE;
 
-ALTER TABLE IF EXISTS census."Privilige_Application_Map"
+ALTER TABLE IF EXISTS census."Privilege_Application_Map"
     ADD FOREIGN KEY (application_id)
         REFERENCES census."Application" (application_id) MATCH SIMPLE
         ON UPDATE CASCADE
