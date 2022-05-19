@@ -9,20 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 @Service
 public class IpRateLimiterService {
 
     private final Logger log = LoggerFactory.getLogger(IpRateLimiterService.class);
 
-    private final int TRIAL_LIMIT_FOR_EACH_IP;
-    private final long COOLWDOWN;
+    private final short TRIAL_LIMIT_FOR_EACH_IP;
+    private final int COOLWDOWN;
 
     private final IpRepository ipRepository;
     private final Map<String, ScheduledFuture<?>> timerMap;
@@ -31,8 +33,8 @@ public class IpRateLimiterService {
     @Autowired
     public IpRateLimiterService(
             IpRepository ipRepository,
-            @Value("${ppij-id.security.lockoff.limit:5}") int trialLimit,
-            @Value("${ppij-id.security.lockoff.cooldown:300}") long cooldown
+            @Value("${ppij-id.security.lockoff.limit:5}") short trialLimit,
+            @Value("${ppij-id.security.lockoff.cooldown:300}") int cooldown
     ) {
         this.ipRepository = ipRepository;
         this.TRIAL_LIMIT_FOR_EACH_IP = trialLimit;
@@ -41,35 +43,49 @@ public class IpRateLimiterService {
         this.executorService = Executors.newScheduledThreadPool(1);
     }
 
-    public boolean addTrialErrorToIp(String ip) {
+    public void addTrialErrorToIp(String ip) {
         if (!InetAddresses.isInetAddress(ip)) {
             log.warn("Checked string ({}) is not a valid Ip address", ip);
-            return false;
+            return;
         }
 
-        if (!timerMap.containsKey(ip)) {
-            log.debug("Ip address {} is not on cooldown yet, adding the cooldown.", ip);
-            this.addCooldown(ip);
-        }
-
-        IpTrialLog ipTrialLog = this.ipRepository.findById(ip).orElse(IpTrialLog.builder().ipTrialLogAddress(ip).ipTrialLogCount((short) 1).build());
-        ipTrialLog.setIpTrialLogCount((short) (ipTrialLog.getIpTrialLogCount() + 1));
-        this.ipRepository.save(ipTrialLog);
-        return true;
+        Optional<IpTrialLog> ipTrialLogOpt = this.ipRepository.findById(ip);
+        addTrialErrorToIp(ip, ipTrialLogOpt);
     }
 
-    public boolean resetTrialForIp(String ip) {
+    private void addTrialErrorToIp(String ip, Optional<IpTrialLog> ipTrialLogOpt) {
+        IpTrialLog ipTrialLog = ipTrialLogOpt.orElse(
+                IpTrialLog.builder()
+                        .ipTrialLogAddress(ip)
+                        .ipTrialLogCount((short) 0)
+                        .build()
+        );
+
+        ipTrialLog.setIpTrialLogCount((short) (ipTrialLog.getIpTrialLogCount() + 1));
+        Calendar timestamp = Calendar.getInstance();
+        timestamp.setTimeInMillis(Instant.now().toEpochMilli());
+        ipTrialLog.setIpTrialLogLastTimestamp(timestamp);
+
+        this.ipRepository.save(ipTrialLog);
+
+    }
+
+    public void resetTrialForIp(String ip) {
         if (!InetAddresses.isInetAddress(ip)) {
             log.warn("Trying to reset trial for invalid ip {}.", ip);
-            return false;
+            return;
         }
+        resetTrialForIp(this.ipRepository.findById(ip));
+    }
 
-        boolean isExists = this.ipRepository.findById(ip).isPresent();
-        this.ipRepository.deleteById(ip);
-        this.timerMap.get(ip).cancel(false);
-        this.timerMap.remove(ip);
-        log.debug("Reset trial and removed from timer map for ip {}.", ip);
-        return isExists;
+    private void resetTrialForIp(Optional<IpTrialLog> ipTrialLog) {
+        if (ipTrialLog.isPresent()) {
+            String ipAddress = ipTrialLog.get().getIpTrialLogAddress();
+            this.ipRepository.deleteById(ipAddress);
+            log.debug("Reset trial for ip {}.", ipAddress);
+        } else {
+            log.debug("Tried to delete trial although ip does not shows up.");
+        }
     }
 
     public boolean checkIpIsNotRateLimited(String ip) {
@@ -78,25 +94,57 @@ public class IpRateLimiterService {
             return false;
         }
 
-        final int trials = getTrialErrorCountForIp(ip);
+        return checkIpIsNotRateLimited(ip, this.ipRepository.findById(ip));
+    }
 
-        if (trials >= TRIAL_LIMIT_FOR_EACH_IP) {
-            log.debug("Checked ip address {} and it exceeds limited amount of trial ({}/{}).", ip, trials, TRIAL_LIMIT_FOR_EACH_IP);
-            return false;
+    private boolean checkIpIsNotRateLimited(String ip, Optional<IpTrialLog> ipTrialLog) {
+        if (ipTrialLog.isEmpty()) {
+            return true;
         }
 
+        final short trials = getTrialErrorCountForIp(ipTrialLog);
+        final Calendar upperLimitTimestamp = getTimestampForIp(ipTrialLog);
+        upperLimitTimestamp.add(Calendar.SECOND, COOLWDOWN);
+
+        if (Instant.now().isBefore(upperLimitTimestamp.toInstant())) {
+            if (trials > TRIAL_LIMIT_FOR_EACH_IP) {
+                log.debug("Checked ip address {} and it exceeds limited amount of trial ({}/{}).", ipTrialLog.get().getIpTrialLogAddress(), trials, TRIAL_LIMIT_FOR_EACH_IP);
+                return false;
+            } else {
+                addTrialErrorToIp(ip, ipTrialLog);
+                return true;
+            }
+        }
+
+        this.resetTrialForIp(ipTrialLog);
         return true;
     }
 
-    private void addCooldown(String ip) {
-        final Runnable timer = () -> {
-            this.resetTrialForIp(ip);
-            log.debug("Removed limited ip {} from the lockoff list.", ip);
-        };
-        this.timerMap.put(ip, executorService.schedule(timer, COOLWDOWN, TimeUnit.SECONDS));
+    private short getTrialErrorCountForIp(String ip) {
+        if (!InetAddresses.isInetAddress(ip)) {
+            log.warn("Checked string ({}) is not a valid Ip address", ip);
+            return 0;
+        }
+
+        Optional<IpTrialLog> ipTrialLog = this.ipRepository.findById(ip);
+        return getTrialErrorCountForIp(ipTrialLog);
     }
 
-    private int getTrialErrorCountForIp(String ip) {
-        return this.ipRepository.findById(ip).orElse(IpTrialLog.builder().ipTrialLogAddress(ip).ipTrialLogCount((short) 1).build()).getIpTrialLogCount();
+    private Calendar getTimestampForIp(String ip) {
+        if (!InetAddresses.isInetAddress(ip)) {
+            log.warn("Checked string ({}) is not a valid Ip address", ip);
+            return null;
+        }
+
+        Optional<IpTrialLog> ipTrialLog = this.ipRepository.findById(ip);
+        return getTimestampForIp(ipTrialLog);
+    }
+
+    private short getTrialErrorCountForIp(Optional<IpTrialLog> ipTrialLog) {
+        return ipTrialLog.map(IpTrialLog::getIpTrialLogCount).orElse((short) 0);
+    }
+
+    private Calendar getTimestampForIp(Optional<IpTrialLog> ipTrialLog) {
+        return ipTrialLog.map(IpTrialLog::getIpTrialLogLastTimestamp).orElse(null);
     }
 }

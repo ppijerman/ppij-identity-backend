@@ -5,7 +5,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.ColumnTransformer;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Objects;
 
 @Entity
@@ -30,7 +30,7 @@ public class IpTrialLog {
 
     @Column(name = "ip_trial_log_last_timestamp", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date ipTrialLogLastTimestamp;
+    private Calendar ipTrialLogLastTimestamp;
 
     @Override
     public boolean equals(Object o) {
