@@ -19,6 +19,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: html
+  application:
+    name: Bootstrap Spring Boot
 
 ppij-id:
   security:
