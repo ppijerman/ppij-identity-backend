@@ -2,6 +2,7 @@ package org.ppijerman.ppijidentitybackend.server.data.dto;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.ppijerman.ppijidentitybackend.server.service.security.dao.authorization.Privileges;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -23,7 +24,8 @@ public class Privilege implements GrantedAuthority {
     private UUID privilegeId;
 
     @Column(name = "privilege_name", columnDefinition = "VARCHAR(50)", length = 50, nullable = false)
-    private String privilegeName;
+    @Enumerated(EnumType.STRING)
+    private Privileges privilegeName;
 
     @Override
     public boolean equals(Object o) {
@@ -40,6 +42,6 @@ public class Privilege implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return privilegeName;
+        return privilegeName.toString();
     }
 }
